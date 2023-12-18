@@ -1,0 +1,13 @@
+{
+    "name": "com.tanitaka-tech.state-variable",
+    "displayName": "State Variable",
+    "version": "1.0.0",
+    "unity": "2022.3",
+    "author": "tanitaka-tech",
+    "description": "State Variable",
+    "keywords": [ "Template", "Editor" ],
+    "license": "MIT",
+    "category": "Editor",
+    "dependencies": {
+    }
+}
