@@ -3,24 +3,36 @@ using UniRx;
 
 namespace TanitakaTech.StateVariable
 {
-    public class ObservableVariable<T> : Variable<T>,
+    public class ObservableVariable<T> : 
+        IVariable<T>,
         IVariableObserver<T>,
         IDisposable
+        where T : IEquatable<T>
     {
+        private IVariable<T> Variable { get; }
         private readonly Subject<T> _onVariableChangedSubject;
 
-        public ObservableVariable(T initialValue) : base(initialValue)
+        public ObservableVariable(T initialValue)
         {
+            Variable = new Variable<T>(initialValue);
             _onVariableChangedSubject = new();
         }
         
-        public override void SetVariable(T value)
+        void IVariableSetter<T>.Set(T value)
         {
-            base.SetVariable(value);
+            bool isUpdate = !value.Equals(Variable.Read());
+            if (isUpdate == false)
+            {
+                return;
+            }
+            
+            Variable.Set(value);
             _onVariableChangedSubject.OnNext(value);
         }
+
+        T IVariableReader<T>.Read() => Variable.Read();
         
-        IObservable<T> IVariableObserver<T>.Observe() => _onVariableChangedSubject.StartWith(CurrentVariable);
+        IObservable<T> IVariableObserver<T>.Observe() => _onVariableChangedSubject.StartWith(Variable.Read());
 
         void IDisposable.Dispose()
         {

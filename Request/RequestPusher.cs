@@ -14,7 +14,7 @@ namespace TanitakaTech.StateVariable
         public void PushRequest(TRequest requestValue)
         {
             Debug.Log($"PushRequest: {requestValue}");
-            RequestSetter.SetVariable(requestValue);
+            RequestSetter.Set(requestValue);
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿namespace TanitakaTech.StateVariable
 {
     public class Variable<T> :
-        IVariableReader<T>,
-        IVariableSetter<T>
+        IVariable<T>
     {
         public T CurrentVariable => _variable;
         private T _variable;
@@ -12,9 +11,7 @@
             _variable = initialValue;
         }
         
-        void IVariableSetter<T>.SetVariable(T value)=> SetVariable(value);
-        public virtual void SetVariable(T value) => _variable = value;
-
+        void IVariableSetter<T>.Set(T value) => _variable = value;
         T IVariableReader<T>.Read() => CurrentVariable;
     }
 }
