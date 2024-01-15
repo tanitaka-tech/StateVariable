@@ -16,16 +16,16 @@ namespace TanitakaTech.StateVariable
             ReactiveProperty = new(initialValue);
         }
         
-        void IVariableSetter<T>.Set(T value)
+        public void Set(T value)
         {
             ReactiveProperty.Value = value;
         }
 
-        T IVariableReader<T>.Read() => ReactiveProperty.Value;
+        public T Read() => ReactiveProperty.Value;
         
-        IObservable<T> IVariableObserver<T>.Observe() => ReactiveProperty.StartWith(ReactiveProperty.Value);
+        public IObservable<T> Observe() => ReactiveProperty;
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             ReactiveProperty.Dispose();
         }
