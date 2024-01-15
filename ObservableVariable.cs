@@ -20,7 +20,9 @@ namespace TanitakaTech.StateVariable
         
         void IVariableSetter<T>.Set(T value)
         {
-            bool isUpdate = !value.Equals(Variable.Read());
+            T currentValue = Variable.Read();
+            bool isUpdate = (value == null && currentValue != null)
+                            || value != null && !value.Equals(currentValue);
             if (isUpdate == false)
             {
                 return;
