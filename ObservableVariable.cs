@@ -9,36 +9,25 @@ namespace TanitakaTech.StateVariable
         IDisposable
         where T : IEquatable<T>
     {
-        private IVariable<T> Variable { get; }
-        private readonly Subject<T> _onVariableChangedSubject;
+        private ReactiveProperty<T> ReactiveProperty { get; }
 
         public ObservableVariable(T initialValue)
         {
-            Variable = new Variable<T>(initialValue);
-            _onVariableChangedSubject = new();
+            ReactiveProperty = new(initialValue);
         }
         
         void IVariableSetter<T>.Set(T value)
         {
-            T currentValue = Variable.Read();
-            bool isUpdate = (value == null && currentValue != null)
-                            || value != null && !value.Equals(currentValue);
-            if (isUpdate == false)
-            {
-                return;
-            }
-            
-            Variable.Set(value);
-            _onVariableChangedSubject.OnNext(value);
+            ReactiveProperty.Value = value;
         }
 
-        T IVariableReader<T>.Read() => Variable.Read();
+        T IVariableReader<T>.Read() => ReactiveProperty.Value;
         
-        IObservable<T> IVariableObserver<T>.Observe() => _onVariableChangedSubject.StartWith(Variable.Read());
+        IObservable<T> IVariableObserver<T>.Observe() => ReactiveProperty.StartWith(ReactiveProperty.Value);
 
         void IDisposable.Dispose()
         {
-            _onVariableChangedSubject.Dispose();
+            ReactiveProperty.Dispose();
         }
     }
 }
