@@ -3,7 +3,8 @@ using Cysharp.Threading.Tasks;
 
 namespace TanitakaTech.StateVariable
 {
-    public class RequestConsumer<TRequest> where TRequest : class
+    public class RequestConsumer<TRequest> : IRequestConsumer<TRequest>
+        where TRequest : class
     {
         private IVariable<TRequest> RequestVariable { get; }
 

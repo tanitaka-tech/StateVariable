@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-
-namespace TanitakaTech.StateVariable
+﻿namespace TanitakaTech.StateVariable
 {
-    public class RequestPusher<TRequest> where TRequest : class
+    public class RequestPusher<TRequest> : IRequestPusher<TRequest>
+        where TRequest : class
     {
         private IVariableSetter<TRequest> RequestSetter { get; }
 
@@ -13,7 +12,6 @@ namespace TanitakaTech.StateVariable
 
         public void PushRequest(TRequest requestValue)
         {
-            Debug.Log($"PushRequest: {requestValue}");
             RequestSetter.Set(requestValue);
         }
     }
