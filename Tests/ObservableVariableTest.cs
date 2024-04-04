@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using UniRx;
+using R3;
 
 namespace TanitakaTech.StateVariable.Tests
 {
@@ -17,7 +17,7 @@ namespace TanitakaTech.StateVariable.Tests
             // Act
             observableVariable.Set(5);
             observableVariable.Set(10);
-            observableVariable.Observe()
+            using var disposable = observableVariable.Observe()
                 .Subscribe(value =>
                 {
                     observedValue = value;
@@ -38,7 +38,7 @@ namespace TanitakaTech.StateVariable.Tests
             int observeCount = 0;
 
             // Act
-            observableVariable.Observe()
+            using var disposable = observableVariable.Observe()
                 .Subscribe(value =>
                 {
                     observedValue = value;

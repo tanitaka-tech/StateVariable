@@ -1,9 +1,9 @@
-﻿using System;
+﻿using R3;
 
 namespace TanitakaTech.StateVariable
 {
-    public interface IVariableObserver<out T> : IVariableReader<T>
+    public interface IVariableObserver<T> : IVariableReader<T>
     {
-        IObservable<T> Observe();
+        Observable<T> Observe();
     }
 }

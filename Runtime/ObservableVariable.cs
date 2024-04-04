@@ -1,15 +1,16 @@
 ﻿using System;
-using UniRx;
+using R3;
+using UnityEngine;
 
 namespace TanitakaTech.StateVariable
 {
+    [Serializable]
     public class ObservableVariable<T> : 
         IVariable<T>,
         IVariableObserver<T>,
         IDisposable
-        where T : IEquatable<T>
     {
-        private ReactiveProperty<T> ReactiveProperty { get; }
+        [SerializeField] private SerializableReactiveProperty<T> ReactiveProperty;
 
         public ObservableVariable(T initialValue)
         {
@@ -23,7 +24,7 @@ namespace TanitakaTech.StateVariable
 
         public T Read() => ReactiveProperty.Value;
         
-        public IObservable<T> Observe() => ReactiveProperty;
+        public Observable<T> Observe() => ReactiveProperty;
 
         public void Dispose()
         {

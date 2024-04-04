@@ -1,6 +1,6 @@
 ﻿namespace TanitakaTech.StateVariable
 {
-    public interface IVariableReader<out T>
+    public interface IVariableReader<T>
     {
         T Read();
     }
