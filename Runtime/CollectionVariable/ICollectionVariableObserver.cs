@@ -24,7 +24,7 @@ namespace TanitakaTech.StateVariable.CollectionVariable
                     , ObserveReset().AsUnitObservable()
                     , ObserveCountChanged().AsUnitObservable()
                 )
-                .ThrottleFirstFrame(1);
+                .ThrottleLastFrame(1);
         }
     }
 }
