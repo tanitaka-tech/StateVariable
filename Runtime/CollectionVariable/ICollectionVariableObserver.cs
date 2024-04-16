@@ -1,10 +1,12 @@
-﻿using ObservableCollections;
+﻿using System.Collections.Generic;
+using ObservableCollections;
 using R3;
 
 namespace TanitakaTech.StateVariable.CollectionVariable
 {
-    public interface ICollectionVariableObserver<T>
-        : ICollectionVariableReader<T>
+    public interface ICollectionVariableObserver<T> : 
+        ICollectionVariableReader<T>,
+        IVariableObserver<IEnumerable<T>>
     {
         Observable<CollectionAddEvent<T>> ObserveAdd();
         Observable<CollectionRemoveEvent<T>> ObserveRemove();
@@ -25,6 +27,12 @@ namespace TanitakaTech.StateVariable.CollectionVariable
                     , ObserveCountChanged().AsUnitObservable()
                 )
                 .ThrottleLastFrame(1);
+        }
+
+        Observable<IEnumerable<T>> IVariableObserver<IEnumerable<T>>.Observe()
+        {
+            return ObserveAllChanges()
+                .Select(_ => Read());
         }
     }
 }
