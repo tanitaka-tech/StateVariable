@@ -2,10 +2,10 @@
 using ObservableCollections;
 using R3;
 
-namespace TanitakaTech.StateVariable.CollectionVariable
+namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public interface ICollectionVariableObserver<T> : 
-        ICollectionVariableReader<T>,
+    public interface IVariableCollectionObserver<T> : 
+        IVariableCollectionReader<T>,
         IVariableObserver<IEnumerable<T>>
     {
         Observable<CollectionAddEvent<T>> ObserveAdd();

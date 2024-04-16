@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace TanitakaTech.StateVariable.CollectionVariable
+namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public interface ICollectionVariableReader<T> : IVariableReader<IEnumerable<T>>
+    public interface IVariableCollectionReader<T> : IVariableReader<IEnumerable<T>>
     {
         IEnumerable<T> ReadAllElements();
         
