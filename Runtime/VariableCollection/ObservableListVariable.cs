@@ -4,13 +4,13 @@ using System.Linq;
 using ObservableCollections;
 using R3;
 
-namespace TanitakaTech.StateVariable.CollectionVariable
+namespace TanitakaTech.StateVariable.VariableCollection
 {
     public class ObservableListVariable<T, ID> :
-        ICollectionVariableObserver<T>,
-        ICollectionVariableElementObserver<T, ID>,
-        ICollectionVariableElementSetter<T, ID>,
-        ICollectionVariableModifier<T, ID>
+        IVariableCollectionObserver<T>,
+        IVariableCollectionElementObserver<T, ID>,
+        IVariableCollectionElementSetter<T, ID>,
+        IVariableCollectionModifier<T, ID>
     {
         private ObservableList<T> ObservableList { get; }
         private Func<T, ID, bool> ElementSelector { get; }
@@ -21,37 +21,37 @@ namespace TanitakaTech.StateVariable.CollectionVariable
             ElementSelector = elementSelector;
         }
 
-        Observable<CollectionAddEvent<T>> ICollectionVariableObserver<T>.ObserveAdd()
+        Observable<CollectionAddEvent<T>> IVariableCollectionObserver<T>.ObserveAdd()
         {
             return ObservableList.ObserveAdd();
         }
 
-        Observable<CollectionRemoveEvent<T>> ICollectionVariableObserver<T>.ObserveRemove()
+        Observable<CollectionRemoveEvent<T>> IVariableCollectionObserver<T>.ObserveRemove()
         {
             return ObservableList.ObserveRemove();
         }
 
-        Observable<CollectionReplaceEvent<T>> ICollectionVariableObserver<T>.ObserveReplace()
+        Observable<CollectionReplaceEvent<T>> IVariableCollectionObserver<T>.ObserveReplace()
         {
             return ObservableList.ObserveReplace();
         }
 
-        Observable<CollectionMoveEvent<T>> ICollectionVariableObserver<T>.ObserveMove()
+        Observable<CollectionMoveEvent<T>> IVariableCollectionObserver<T>.ObserveMove()
         {
             return ObservableList.ObserveMove();
         }
 
-        Observable<Unit> ICollectionVariableObserver<T>.ObserveReset()
+        Observable<Unit> IVariableCollectionObserver<T>.ObserveReset()
         {
             return ObservableList.ObserveReset();
         }
 
-        Observable<int> ICollectionVariableObserver<T>.ObserveCountChanged()
+        Observable<int> IVariableCollectionObserver<T>.ObserveCountChanged()
         {
             return ObservableList.ObserveCountChanged();
         }
 
-        Observable<T> ICollectionVariableElementObserver<T, ID>.ObserveElement(ID id)
+        Observable<T> IVariableCollectionElementObserver<T, ID>.ObserveElement(ID id)
         {
             var replaceObservable = ObservableList.ObserveReplace()
                 .Where(e => ElementSelector(e.NewValue, id))
@@ -69,12 +69,12 @@ namespace TanitakaTech.StateVariable.CollectionVariable
                 .DistinctUntilChanged();
         }
 
-        T ICollectionVariableElementReader<T, ID>.ReadElement(ID id)
+        T IVariableCollectionElementReader<T, ID>.ReadElement(ID id)
         {
             return ObservableList.FirstOrDefault(e => ElementSelector(e, id));
         }
         
-        IEnumerable<T> ICollectionVariableReader<T>.ReadAllElements()
+        IEnumerable<T> IVariableCollectionReader<T>.ReadAllElements()
         {
             return ObservableList;
         }
@@ -94,12 +94,12 @@ namespace TanitakaTech.StateVariable.CollectionVariable
             }
         }
 
-        void ICollectionVariableModifier<T, ID>.Add(T element, ID id)
+        void IVariableCollectionModifier<T, ID>.Add(T element, ID id)
         {
             ObservableList.Add(element);
         }
 
-        void ICollectionVariableModifier<T, ID>.Remove(ID id)
+        void IVariableCollectionModifier<T, ID>.Remove(ID id)
         {
             var alreadyElement = ObservableList.FirstOrDefault(e => ElementSelector(e, id));
             if (alreadyElement != null)
@@ -108,12 +108,12 @@ namespace TanitakaTech.StateVariable.CollectionVariable
             }
         }
 
-        void ICollectionVariableModifier<T, ID>.Replace(T newElement, ID id)
+        void IVariableCollectionModifier<T, ID>.Replace(T newElement, ID id)
         {
             SetElement(id, newElement);
         }
 
-        void ICollectionVariableModifier<T, ID>.Reset(IEnumerable<KeyValuePair<ID, T>> newCollection)
+        void IVariableCollectionModifier<T, ID>.Reset(IEnumerable<KeyValuePair<ID, T>> newCollection)
         {
             ObservableList.Clear();
             if (newCollection == null)

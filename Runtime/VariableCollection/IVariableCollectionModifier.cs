@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace TanitakaTech.StateVariable.CollectionVariable
+namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public interface ICollectionVariableModifier<T, ID>
+    public interface IVariableCollectionModifier<T, ID>
     {
         void Add(T element, ID id = default);
         void Remove(ID id);
