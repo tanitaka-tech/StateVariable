@@ -12,5 +12,19 @@ namespace TanitakaTech.StateVariable.CollectionVariable
         Observable<CollectionMoveEvent<T>> ObserveMove();
         Observable<Unit> ObserveReset();
         Observable<int> ObserveCountChanged();
+        
+        Observable<Unit> ObserveAllChanges()
+        {
+            return Observable
+                .Merge(
+                    ObserveAdd().AsUnitObservable()
+                    , ObserveRemove().AsUnitObservable()
+                    , ObserveReplace().AsUnitObservable()
+                    , ObserveMove().AsUnitObservable()
+                    , ObserveReset().AsUnitObservable()
+                    , ObserveCountChanged().AsUnitObservable()
+                )
+                .ThrottleFirstFrame(1);
+        }
     }
 }
