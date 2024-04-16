@@ -75,7 +75,7 @@ namespace TanitakaTech.StateVariable.CollectionVariable
             return ObservableDictionary[id];
         }
         
-        IEnumerable<T> ICollectionVariableElementReader<T, ID>.ReadAllElements()
+        IEnumerable<T> ICollectionVariableReader<T>.ReadAllElements()
         {
             return ObservableDictionary.AsEnumerable()
                 .Select(pair => pair.Value);

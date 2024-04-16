@@ -4,6 +4,7 @@ using R3;
 namespace TanitakaTech.StateVariable.CollectionVariable
 {
     public interface ICollectionVariableObserver<T>
+        : ICollectionVariableReader<T>
     {
         Observable<CollectionAddEvent<T>> ObserveAdd();
         Observable<CollectionRemoveEvent<T>> ObserveRemove();

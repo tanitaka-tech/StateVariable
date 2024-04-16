@@ -74,7 +74,7 @@ namespace TanitakaTech.StateVariable.CollectionVariable
             return ObservableList.FirstOrDefault(e => ElementSelector(e, id));
         }
         
-        IEnumerable<T> ICollectionVariableElementReader<T, ID>.ReadAllElements()
+        IEnumerable<T> ICollectionVariableReader<T>.ReadAllElements()
         {
             return ObservableList;
         }

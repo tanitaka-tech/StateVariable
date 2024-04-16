@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace TanitakaTech.StateVariable.CollectionVariable
+﻿namespace TanitakaTech.StateVariable.CollectionVariable
 {
-    public interface ICollectionVariableElementReader<T, ID>
+    public interface ICollectionVariableElementReader<T, ID> :
+        ICollectionVariableReader<T>
     {
         T ReadElement(ID id);
-        IEnumerable<T> ReadAllElements();
     }
 }
