@@ -4,16 +4,59 @@
 
 ## Features 🚀
 - Variable Set/Read/Observe
+- VariableCollection
+- DependencyVariable
 - RequestPusher/RequestConsumer
 
-## 使用想定
+## Variable List
 
-### IVariableSetter/Reader/Observer
-Context内で同じ変数を共有したい時に使用する。(ex. 画面内で選択中アイテムの参照保持、Project内で共通のユーザーデータ保持など)
 
-提供する機能はReactivePropertyと同じだが、こちらは役割を絞ることでより詳細なコード表現を目的にする。
-- 機能毎に3つのinterfaceが用意されており、必要なinterfaceのみを注入することでモジュールの責務を明確にする。
-- VariableとはStateVariableの略であり、StateVariableには「とあるContext内で共有する変数」という意味合いを込めている。そのため、共有されている変数ということを強調できる。
+| class                        | summary                                                            | implements interface                                                                                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ObservableVariable**       | A state variable that can be observed                              | IVariableReader, IVariableObserver, IVariableSetter, IDisposable                                                                                                                                  |
+| **Variable**                 | A state variable that cannot be observed but is more memory-efficient than ObservableVariable | IVariableReader, IVariableSetter                                                                                                                                                                  |
+| **DependencyVariable**       | A variable that derives results from other variables and triggers them | IVariableReader, IVariableObserver                                                                                                                                                                |
+| **ObservableListVariable**   | A collection of Variables (internally implemented as a List)       | IVariableReader, IVariableSetter, IVariableCollectionObserver, IVariableCollectionElementObserver, IVariableCollectionElementSetter, IVariableCollectionModifier                                  |
+| **ObservableDictionaryVariable** | A collection of Variables (internally implemented as a Dictionary) | IVariableReader, IVariableSetter, IVariableCollectionObserver, IVariableCollectionElementObserver, IVariableCollectionElementSetter, IVariableCollectionModifier                                  |
+
+## Concept
+
+それぞれのVariableはDIコンテナの適切なContextにBindし、各Objectで必要な依存を取得します。
+
+``` csharp
+
+// ----- 任意のDIコンテナのInstaller(このコード例はZenject)
+var testVariable = new ObservableVariable<Test>(new Test());
+testVariable.AddTo(this);    // ObservableVariableは内部的にReactivePropertyを使用しているため、Dispose管理する必要がある
+Container.BindInstance<IVariableReader<Test>>(testVariable);
+Container.BindInstance<IVariableObserver<Test>>(testVariable);
+Container.BindInstance<IVariableSetter<Test>>(testVariable);
+
+// ----- 任意のObject内
+[Inject] IVariableObserver<Test> _testObserver;
+[Inject] IVariableReader<Test> _testReader;
+[Inject] IVariableSetter<Test> _testSetter;
+
+void Start()
+{
+    // How to use variable
+    _testObserver.Observe().Subscribe(test => {}).AddTo(this);
+    Test test = _testReader.Read();
+    _testSetter.Set(new Test());
+
+    // ObserverはReadも可能
+    test = _testObserver.Read();
+
+    // SetterもReadできる
+    test = _testSetter.Read();
+}
+
+```
+
+- 機能毎に3つのinterfaceが用意されており、必要なinterfaceのみを注入することでモジュールやオブジェクトの責務を明確にする。
+- VariableはStateVariableの略であり、StateVariableには「とあるContext内で共有する状態変数」という意味合いを込めている。そのため、型シグネチャによって共有されている変数ということを強調できる。
+- DependencyVariableにより、状態変数から導出される変数を状態変数と同じシグネチャでハンドリングできる
+
 
 ### IRequestPusher/Consumer
 Context内で「子から親へのメッセージング」したい時に使用する。(ex. 画面モジュールで画面遷移Requestをawaitし、ボタンモジュールから画面遷移RequestをPushするなど)
