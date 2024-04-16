@@ -35,6 +35,7 @@ Context内で「子から親へのメッセージング」したい時に使用�
 openupm add com.tanitaka-tech.state-variable
 ```
 
-## Required 🙏
+## Required
 - [UniTask](https://github.com/Cysharp/UniTask)
-- [UniRx](https://github.com/neuecc/UniRx)
+- [R3](https://github.com/Cysharp/R3)
+- [ObaservableCollections](https://github.com/Cysharp/ObservableCollections)
