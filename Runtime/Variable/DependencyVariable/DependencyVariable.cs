@@ -17,6 +17,14 @@ namespace TanitakaTech.StateVariable
             CombineLatestObservable = combineLatestObservable;
         }
         
+        public static DependencyVariable<TR> Create<T1, TR>(IVariableObserver<T1> source1, Func<T1, TR> resultSelector)
+        {
+            return new DependencyVariable<TR>(
+                combineLatestObservable: source1.Observe().Select(resultSelector),
+                resultSelector: () => resultSelector(source1.Read())
+            );
+        }
+        
         public static DependencyVariable<TR> Create<T1, T2, TR>(IVariableObserver<T1> source1, IVariableObserver<T2> source2, Func<T1, T2, TR> resultSelector)
         {
             return new DependencyVariable<TR>(
