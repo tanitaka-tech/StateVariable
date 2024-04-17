@@ -120,11 +120,7 @@ namespace TanitakaTech.StateVariable.VariableCollection
             {
                 return;
             }
-            
-            foreach (var pair in newCollection)
-            {
-                ObservableList.Add(pair.Value);
-            }
+            ObservableList.AddRange(newCollection.Select(pair => pair.Value));
         }
     }
 }
