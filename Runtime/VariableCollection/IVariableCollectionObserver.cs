@@ -15,7 +15,7 @@ namespace TanitakaTech.StateVariable.VariableCollection
         Observable<Unit> ObserveReset();
         Observable<int> ObserveCountChanged();
         
-        Observable<Unit> ObserveAllChanges()
+        private Observable<Unit> ObserveAllChangesInternal()
         {
             return Observable
                 .Merge(
@@ -26,13 +26,16 @@ namespace TanitakaTech.StateVariable.VariableCollection
                     , ObserveReset().AsUnitObservable()
                     , ObserveCountChanged().AsUnitObservable()
                 )
+                .Prepend(Unit.Default)
                 .ThrottleLastFrame(1);
         }
 
         Observable<IEnumerable<T>> IVariableObserver<IEnumerable<T>>.Observe()
         {
-            return ObserveAllChanges()
+            return ObserveAllChangesInternal()
                 .Select(_ => Read());
         }
+
+        public new Observable<IEnumerable<T>> Observe() => ((IVariableObserver<IEnumerable<T>>)this).Observe();
     }
 }

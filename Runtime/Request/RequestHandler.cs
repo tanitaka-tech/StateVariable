@@ -7,7 +7,7 @@ namespace TanitakaTech.StateVariable
         IRequestPusher<TRequest>,
         IRequestConsumer<TRequest> where TRequest : class
     {
-        private IVariable<TRequest> RequestVariable { get; } = new Variable<TRequest>(null);
+        private Variable<TRequest> RequestVariable { get; } = new Variable<TRequest>(null);
 
         void IRequestPusher<TRequest>.PushRequest(TRequest requestValue)
         {

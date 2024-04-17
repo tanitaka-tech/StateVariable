@@ -6,7 +6,7 @@ namespace TanitakaTech.StateVariable
 {
     [Serializable]
     public class ObservableVariable<T> : 
-        IVariable<T>,
+        IVariableSetter<T>,
         IVariableObserver<T>,
         IDisposable
     {

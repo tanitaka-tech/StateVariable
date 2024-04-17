@@ -2,9 +2,9 @@
 
 namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public interface IVariableCollectionElementObserver<T, ID> :
-        IVariableCollectionElementReader<T, ID>
+    public interface IVariableCollectionElementObserver<TKey, TValue> :
+        IVariableCollectionElementReader<TKey, TValue>
     {
-        Observable<T> ObserveElement(ID id);
+        Observable<TValue> ObserveElement(TKey id);
     }
 }
