@@ -6,82 +6,82 @@ using R3;
 
 namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public class ObservableListVariable<T, ID> :
-        IVariableCollectionObserver<T>,
-        IVariableCollectionElementObserver<T, ID>,
-        IVariableCollectionElementSetter<T, ID>,
-        IVariableCollectionModifier<T, ID>
+    public class ObservableListVariable<TKey, TValue> :
+        IVariableCollectionObserver<TValue>,
+        IVariableCollectionElementObserver<TKey, TValue>,
+        IVariableCollectionElementSetter<TKey, TValue>,
+        IVariableCollectionModifier<TKey, TValue>
     {
-        private ObservableList<T> ObservableList { get; }
-        private Func<T, ID, bool> ElementSelector { get; }
+        private ObservableList<TValue> ObservableList { get; }
+        private Func<TKey, TValue, bool> ElementSelector { get; }
 
-        public ObservableListVariable(ObservableList<T> observableList, Func<T, ID, bool> elementSelector)
+        public ObservableListVariable(ObservableList<TValue> observableList, Func<TKey, TValue, bool> elementSelector)
         {
             ObservableList = observableList;
             ElementSelector = elementSelector;
         }
 
-        Observable<CollectionAddEvent<T>> IVariableCollectionObserver<T>.ObserveAdd()
+        public Observable<CollectionAddEvent<TValue>> ObserveAdd()
         {
             return ObservableList.ObserveAdd();
         }
 
-        Observable<CollectionRemoveEvent<T>> IVariableCollectionObserver<T>.ObserveRemove()
+        public Observable<CollectionRemoveEvent<TValue>> ObserveRemove()
         {
             return ObservableList.ObserveRemove();
         }
 
-        Observable<CollectionReplaceEvent<T>> IVariableCollectionObserver<T>.ObserveReplace()
+        public Observable<CollectionReplaceEvent<TValue>> ObserveReplace()
         {
             return ObservableList.ObserveReplace();
         }
 
-        Observable<CollectionMoveEvent<T>> IVariableCollectionObserver<T>.ObserveMove()
+        public Observable<CollectionMoveEvent<TValue>> ObserveMove()
         {
             return ObservableList.ObserveMove();
         }
 
-        Observable<Unit> IVariableCollectionObserver<T>.ObserveReset()
+        public Observable<Unit> ObserveReset()
         {
             return ObservableList.ObserveReset();
         }
 
-        Observable<int> IVariableCollectionObserver<T>.ObserveCountChanged()
+        public Observable<int> ObserveCountChanged()
         {
             return ObservableList.ObserveCountChanged();
         }
 
-        Observable<T> IVariableCollectionElementObserver<T, ID>.ObserveElement(ID id)
+        public Observable<TValue> ObserveElement(TKey id)
         {
             var replaceObservable = ObservableList.ObserveReplace()
-                .Where(e => ElementSelector(e.NewValue, id))
+                .Where(e => ElementSelector(id, e.NewValue))
                 .Select(e => e.NewValue);
             var resetObservable = ObservableList.ObserveReset()
-                .Select(_ => (T)default);
+                .Select(_ => (TValue)default);
             var addObservable = ObservableList.ObserveAdd()
-                .Where(e => ElementSelector(e.Value, id))
+                .Where(e => ElementSelector(id, e.Value))
                 .Select(e => e.Value);
             var removeObservable = ObservableList.ObserveRemove()
-                .Where(e => ElementSelector(e.Value, id))
-                .Select(_ => (T)default);
+                .Where(e => ElementSelector(id, e.Value))
+                .Select(_ => (TValue)default);
 
             return Observable.Merge(replaceObservable, resetObservable, addObservable, removeObservable)
                 .DistinctUntilChanged();
         }
 
-        T IVariableCollectionElementReader<T, ID>.ReadElement(ID id)
+        public TValue ReadElement(TKey id)
         {
-            return ObservableList.FirstOrDefault(e => ElementSelector(e, id));
+            return ObservableList.FirstOrDefault(e => ElementSelector(id, e));
         }
         
-        IEnumerable<T> IVariableCollectionReader<T>.ReadAllElements()
+        public IEnumerable<TValue> ReadAllElements()
         {
             return ObservableList;
         }
 
-        public void SetElement(ID id, T newElement)
+        public void SetElement(TKey id, TValue newElement)
         {
-            var alreadyElement = ObservableList.FirstOrDefault(e => ElementSelector(e, id));
+            var alreadyElement = ObservableList.FirstOrDefault(e => ElementSelector(id, e));
             bool isExist = alreadyElement != null;
             if (isExist)
             {
@@ -94,26 +94,26 @@ namespace TanitakaTech.StateVariable.VariableCollection
             }
         }
 
-        void IVariableCollectionModifier<T, ID>.Add(T element, ID id)
+        public void Add(TKey id, TValue newElement)
         {
-            ObservableList.Add(element);
+            ObservableList.Add(newElement);
         }
 
-        void IVariableCollectionModifier<T, ID>.Remove(ID id)
+        public void Remove(TKey id)
         {
-            var alreadyElement = ObservableList.FirstOrDefault(e => ElementSelector(e, id));
+            var alreadyElement = ObservableList.FirstOrDefault(e => ElementSelector(id, e));
             if (alreadyElement != null)
             {
                 ObservableList.Remove(alreadyElement);
             }
         }
 
-        void IVariableCollectionModifier<T, ID>.Replace(T newElement, ID id)
+        public void Replace(TKey id, TValue newElement)
         {
             SetElement(id, newElement);
         }
 
-        void IVariableCollectionModifier<T, ID>.Reset(IEnumerable<KeyValuePair<ID, T>> newCollection)
+        public void Reset(IEnumerable<KeyValuePair<TKey, TValue>> newCollection)
         {
             ObservableList.Clear();
             if (newCollection == null)
