@@ -35,7 +35,5 @@ namespace TanitakaTech.StateVariable.VariableCollection
             return ObserveAllChangesInternal()
                 .Select(_ => Read());
         }
-
-        public new Observable<IEnumerable<T>> Observe() => ((IVariableObserver<IEnumerable<T>>)this).Observe();
     }
 }

@@ -10,25 +10,25 @@ namespace TanitakaTech.StateVariable
         IVariableObserver<T>,
         IDisposable
     {
-        [SerializeField] private SerializableReactiveProperty<T> ReactiveProperty;
+        [SerializeField] private SerializableReactiveProperty<T> _reactiveProperty;
 
         public ObservableVariable(T initialValue)
         {
-            ReactiveProperty = new(initialValue);
+            _reactiveProperty = new(initialValue);
         }
         
         public void Set(T value)
         {
-            ReactiveProperty.Value = value;
+            _reactiveProperty.Value = value;
         }
 
-        public T Read() => ReactiveProperty.Value;
+        public T Read() => _reactiveProperty.Value;
         
-        public Observable<T> Observe() => ReactiveProperty;
+        public Observable<T> Observe() => _reactiveProperty;
 
         public void Dispose()
         {
-            ReactiveProperty.Dispose();
+            _reactiveProperty.Dispose();
         }
     }
 }
