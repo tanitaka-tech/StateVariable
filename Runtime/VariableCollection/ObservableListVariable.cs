@@ -15,6 +15,10 @@ namespace TanitakaTech.StateVariable.VariableCollection
         private ObservableList<TValue> ObservableList { get; }
         private Func<TKey, TValue, bool> ElementSelector { get; }
 
+        public ObservableListVariable(Func<TKey, TValue, bool> elementSelector): this(new ObservableList<TValue>(), elementSelector)
+        {
+        }
+        
         public ObservableListVariable(ObservableList<TValue> observableList, Func<TKey, TValue, bool> elementSelector)
         {
             ObservableList = observableList;

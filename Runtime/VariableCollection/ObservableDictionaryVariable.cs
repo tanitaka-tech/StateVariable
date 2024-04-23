@@ -13,6 +13,10 @@ namespace TanitakaTech.StateVariable.VariableCollection
     {
         private ObservableCollections.ObservableDictionary<TKey, TValue> ObservableDictionary { get; }
 
+        public ObservableDictionaryVariable() : this(new ObservableCollections.ObservableDictionary<TKey, TValue>())
+        {
+        }
+        
         public ObservableDictionaryVariable(ObservableCollections.ObservableDictionary<TKey, TValue> observableDictionary)
         {
             ObservableDictionary = observableDictionary;
