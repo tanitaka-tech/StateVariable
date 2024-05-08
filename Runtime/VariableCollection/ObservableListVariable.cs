@@ -124,7 +124,13 @@ namespace TanitakaTech.StateVariable.VariableCollection
             {
                 return;
             }
-            ObservableList.AddRange(newCollection.Select(pair => pair.Value));
+            
+            // NOTE: AddRangeを使うと要素がnullになることがあるため、Addで追加
+            var addRange = newCollection.Select(pair => pair.Value).ToList();
+            foreach (var value in addRange)
+            {
+                ObservableList.Add(value);
+            }
         }
     }
 }
