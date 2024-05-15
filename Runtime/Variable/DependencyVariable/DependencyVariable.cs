@@ -20,7 +20,7 @@ namespace TanitakaTech.StateVariable
         public static DependencyVariable<TR> Create<T1, TR>(IVariableObserver<T1> source1, Func<T1, TR> resultSelector)
         {
             return new DependencyVariable<TR>(
-                resultObservable: source1.Observe().Select(resultSelector),
+                resultObservable: source1.Observe().Select(resultSelector).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read())
             );
         }
@@ -31,7 +31,7 @@ namespace TanitakaTech.StateVariable
                 resultObservable: ObservableExtensions.CombineLatest(
                     source1.Observe(), source2.Observe(),
                     resultSelector
-                ),
+                ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read())
             );
         }
@@ -42,7 +42,7 @@ namespace TanitakaTech.StateVariable
                 resultObservable: ObservableExtensions.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), 
                     resultSelector
-                    ),
+                    ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read())
                 );
         }
@@ -53,7 +53,7 @@ namespace TanitakaTech.StateVariable
                 resultObservable: ObservableExtensions.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(),
                     resultSelector
-                ),
+                ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read())
             );
         }
@@ -64,7 +64,7 @@ namespace TanitakaTech.StateVariable
                 resultObservable: ObservableExtensions.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(),
                     resultSelector
-                ),
+                ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read())
             );
         }
@@ -75,7 +75,7 @@ namespace TanitakaTech.StateVariable
                 resultObservable: ObservableExtensions.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(),
                     resultSelector
-                ),
+                ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read())
             );
         }
@@ -86,7 +86,7 @@ namespace TanitakaTech.StateVariable
                 resultObservable: ObservableExtensions.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(), source7.Observe(),
                     resultSelector
-                ),
+                ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read(), source7.Read())
             );
         }
@@ -97,7 +97,7 @@ namespace TanitakaTech.StateVariable
                 resultObservable: ObservableExtensions.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(), source7.Observe(), source8.Observe(),
                     resultSelector
-                ),
+                ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read(), source7.Read(), source8.Read())
             );
         }
@@ -108,7 +108,7 @@ namespace TanitakaTech.StateVariable
                 resultObservable: ObservableExtensions.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(), source7.Observe(), source8.Observe(), source9.Observe(),
                     resultSelector
-                ),
+                ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read(), source7.Read(), source8.Read(), source9.Read())
             );
         }
@@ -124,7 +124,7 @@ namespace TanitakaTech.StateVariable
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(),
                     source6.Observe(), source7.Observe(), source8.Observe(), source9.Observe(), source10.Observe(),
                     resultSelector
-                ),
+                ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(),
                     source5.Read(), source6.Read(), source7.Read(), source8.Read(), source9.Read(), source10.Read())
             );
