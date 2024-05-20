@@ -79,6 +79,17 @@ namespace TanitakaTech.StateVariable.VariableCollection
             return ObservableDictionary[id];
         }
         
+        public ElementReadResult TryReadElement(TKey id, out TValue element)
+        {
+            if (ObservableDictionary.TryGetValue(id, out var value))
+            {
+                element = value;
+                return ElementReadResult.Success;
+            }
+            element = default;
+            return ElementReadResult.NotFound;
+        }
+        
         IEnumerable<TValue> IVariableCollectionReader<TValue>.ReadAllElements()
         {
             return ObservableDictionary.AsEnumerable()

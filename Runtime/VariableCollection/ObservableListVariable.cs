@@ -77,6 +77,13 @@ namespace TanitakaTech.StateVariable.VariableCollection
         {
             return ObservableList.FirstOrDefault(e => ElementSelector(id, e));
         }
+
+        public ElementReadResult TryReadElement(TKey id, out TValue element1)
+        {
+            element1 = ReadElement(id);
+            return element1 != null ? ElementReadResult.Success : ElementReadResult.NotFound;
+        }
+
         
         public IEnumerable<TValue> ReadAllElements()
         {
