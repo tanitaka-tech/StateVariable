@@ -5,7 +5,7 @@
 ## Features 🚀
 - Variable Set/Read/Observe
 - VariableCollection
-- DependencyVariable/HarfDependencyVariable
+- DependencyVariable/HalfDependencyVariable
 - RequestPusher/RequestConsumer
 
 ## Variable List
