@@ -25,6 +25,16 @@ namespace TanitakaTech.StateVariable
         {
             SelfObservableVariable.Dispose();
         }
+        
+        public static HalfDependencyVariable<TR> Create<TR>(TR initialValue, Func<TR, TR> resultSelector)
+        {
+            var selfObservableVariable = new ObservableVariable<TR>(initialValue);
+            return new HalfDependencyVariable<TR>(
+                selfObservableVariable: selfObservableVariable,
+                resultObservable: selfObservableVariable.Observe().Select(resultSelector).DistinctUntilChanged(),
+                resultSelector: () => resultSelector(selfObservableVariable.Read())
+            );
+        }
 
         public static HalfDependencyVariable<TR> Create<T1, TR>(TR initialValue, IVariableObserver<T1> source1, Func<TR, T1, TR> resultSelector)
         {
