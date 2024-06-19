@@ -5,7 +5,7 @@
 ## Features 🚀
 - Variable Set/Read/Observe
 - VariableCollection
-- DependencyVariable
+- DependencyVariable/HarfDependencyVariable
 - RequestPusher/RequestConsumer
 
 ## Variable List
@@ -16,6 +16,7 @@
 | **ObservableVariable**       | A state variable that can be observed                              | IVariableReader, IVariableObserver, IVariableSetter, IDisposable                                                                                                                                  |
 | **Variable**                 | A state variable that cannot be observed but is more memory-efficient than ObservableVariable | IVariableReader, IVariableSetter                                                                                                                                                                  |
 | **DependencyVariable**       | A variable that derives results from other variables and triggers them | IVariableReader, IVariableObserver                                                                                                                                                                |
+| **HalfDependencyVariable**       | A Variable that derive results from other variables and their own variable and trigger them | IVariableReader, IVariableSetter, IVariableObserver                                                                                                                                                                |
 | **ObservableListVariable**   | A collection of Variables (internally implemented as a List)       | IVariableReader, IVariableSetter, IVariableCollectionObserver, IVariableCollectionElementObserver, IVariableCollectionElementSetter, IVariableCollectionModifier                                  |
 | **ObservableDictionaryVariable** | A collection of Variables (internally implemented as a Dictionary) | IVariableReader, IVariableSetter, IVariableCollectionObserver, IVariableCollectionElementObserver, IVariableCollectionElementSetter, IVariableCollectionModifier                                  |
 
