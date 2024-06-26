@@ -70,6 +70,7 @@ namespace TanitakaTech.StateVariable.VariableCollection
                 .Select(_ => (TValue)default);
 
             return Observable.Merge(replaceObservable, resetObservable, addObservable, removeObservable)
+                .Prepend(ReadElement(id))
                 .DistinctUntilChanged();
         }
 
