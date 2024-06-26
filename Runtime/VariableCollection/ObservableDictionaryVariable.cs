@@ -71,10 +71,11 @@ namespace TanitakaTech.StateVariable.VariableCollection
                 .Select(_ => (TValue)default);
             
             return Observable.Merge(replaceObservable, resetObservable, addObservable, removeObservable)
+                .Prepend(ReadElement(id))
                 .DistinctUntilChanged();
         }
 
-        TValue IVariableCollectionElementReader<TKey, TValue>.ReadElement(TKey id)
+        public TValue ReadElement(TKey id)
         {
             return ObservableDictionary[id];
         }
