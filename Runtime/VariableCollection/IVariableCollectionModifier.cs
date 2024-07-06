@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public interface IVariableCollectionModifier<TKey, TValue>
+    public interface IVariableCollectionModifier<TKey, TValue> : IVariableCollectionElementSetter<TKey, TValue>
     {
         void Add(TKey id, TValue newElement);
         void Remove(TKey id);
