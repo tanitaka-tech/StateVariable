@@ -6,7 +6,6 @@
 - Variable Set/Read/Observe
 - VariableCollection
 - DependencyVariable/HalfDependencyVariable
-- RequestPusher/RequestConsumer
 
 ## Variable List
 
@@ -57,14 +56,6 @@ void Start()
 - 機能毎に3つのinterfaceが用意されており、必要なinterfaceのみを注入することでモジュールやオブジェクトの責務を明確にする。
 - VariableはStateVariableの略であり、StateVariableには「とあるContext内で共有する状態変数」という意味合いを込めている。そのため、型シグネチャによって共有されている変数ということを強調できる。
 - DependencyVariableにより、状態変数から導出される変数を状態変数と同じシグネチャでハンドリングできる
-
-
-### IRequestPusher/Consumer
-Context内で「子から親へのメッセージング」したい時に使用する。(ex. 画面モジュールで画面遷移Requestをawaitし、ボタンモジュールから画面遷移RequestをPushするなど)
-
-提供する機能はMessagePipeと似ているが、こちらはよりシンプルな使用を想定している。
-- Messageという命名はモジュール間で相互にやりとりする印象があるが、Requestはモジュール間で一方向な印象があり、ユースケースを限定した命名になっている。
-- Requestに対してFilterをかける機能などは無く、本当にただPushしてConsumeでRequestをawaitするだけ。
 
 ## Installation ☘️
 
