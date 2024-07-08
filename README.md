@@ -71,6 +71,5 @@ openupm add com.tanitaka-tech.state-variable
 ```
 
 ## Required
-- [UniTask](https://github.com/Cysharp/UniTask)
 - [R3](https://github.com/Cysharp/R3)
 - [ObaservableCollections](https://github.com/Cysharp/ObservableCollections)
