@@ -32,6 +32,9 @@ Container.BindInstance<IVariableReader<Test>>(testVariable);
 Container.BindInstance<IVariableObserver<Test>>(testVariable);
 Container.BindInstance<IVariableSetter<Test>>(testVariable);
 
+```
+
+``` csharp
 // ----- 任意のObject内
 [Inject] IVariableObserver<Test> _testObserver;
 [Inject] IVariableReader<Test> _testReader;
