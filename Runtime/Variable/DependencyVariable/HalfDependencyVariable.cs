@@ -41,7 +41,7 @@ namespace TanitakaTech.StateVariable
             var selfObservableVariable = new ObservableVariable<TR>(initialValue);
             return new HalfDependencyVariable<TR>(
                 selfObservableVariable: selfObservableVariable,
-                resultObservable: ObservableExtensions.CombineLatest(
+                resultObservable: Observable.CombineLatest(
                     selfObservableVariable.Observe(), source1.Observe(),
                     resultSelector
                 ).DistinctUntilChanged(),
@@ -54,7 +54,7 @@ namespace TanitakaTech.StateVariable
             var selfObservableVariable = new ObservableVariable<TR>(initialValue);
             return new HalfDependencyVariable<TR>(
                 selfObservableVariable: selfObservableVariable,
-                resultObservable: ObservableExtensions.CombineLatest(
+                resultObservable: Observable.CombineLatest(
                     selfObservableVariable.Observe(), source1.Observe(), source2.Observe(),
                     resultSelector
                 ).DistinctUntilChanged(),
@@ -67,7 +67,7 @@ namespace TanitakaTech.StateVariable
             var selfObservableVariable = new ObservableVariable<TR>(initialValue);
             return new HalfDependencyVariable<TR>(
                 selfObservableVariable: selfObservableVariable,
-                resultObservable: ObservableExtensions.CombineLatest(
+                resultObservable: Observable.CombineLatest(
                     selfObservableVariable.Observe(), source1.Observe(), source2.Observe(), source3.Observe(),
                     resultSelector
                 ).DistinctUntilChanged(),
@@ -80,7 +80,7 @@ namespace TanitakaTech.StateVariable
             var selfObservableVariable = new ObservableVariable<TR>(initialValue);
             return new HalfDependencyVariable<TR>(
                 selfObservableVariable: selfObservableVariable,
-                resultObservable: ObservableExtensions.CombineLatest(
+                resultObservable: Observable.CombineLatest(
                     selfObservableVariable.Observe(), source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(),
                     resultSelector
                 ).DistinctUntilChanged(),
@@ -93,7 +93,7 @@ namespace TanitakaTech.StateVariable
             var selfObservableVariable = new ObservableVariable<TR>(initialValue);
             return new HalfDependencyVariable<TR>(
                 selfObservableVariable: selfObservableVariable,
-                resultObservable: ObservableExtensions.CombineLatest(
+                resultObservable: Observable.CombineLatest(
                     selfObservableVariable.Observe(), source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(),
                     resultSelector
                 ).DistinctUntilChanged(),
@@ -106,7 +106,7 @@ namespace TanitakaTech.StateVariable
             var selfObservableVariable = new ObservableVariable<TR>(initialValue);
             return new HalfDependencyVariable<TR>(
                 selfObservableVariable: selfObservableVariable,
-                resultObservable: ObservableExtensions.CombineLatest(
+                resultObservable: Observable.CombineLatest(
                     selfObservableVariable.Observe(), source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(),
                     resultSelector
                 ).DistinctUntilChanged(),
@@ -119,7 +119,7 @@ namespace TanitakaTech.StateVariable
             var selfObservableVariable = new ObservableVariable<TR>(initialValue);
             return new HalfDependencyVariable<TR>(
                 selfObservableVariable: selfObservableVariable,
-                resultObservable: ObservableExtensions.CombineLatest(
+                resultObservable: Observable.CombineLatest(
                     selfObservableVariable.Observe(), source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(), source7.Observe(),
                     resultSelector
                 ).DistinctUntilChanged(),
