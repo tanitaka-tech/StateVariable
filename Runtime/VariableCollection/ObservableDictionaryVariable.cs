@@ -22,41 +22,41 @@ namespace TanitakaTech.StateVariable.VariableCollection
             ObservableDictionary = observableDictionary;
         }
         
-        Observable<CollectionAddEvent<TValue>> IVariableCollectionObserver<TValue>.ObserveAdd()
+        public Observable<CollectionAddEvent<TValue>> ObserveAdd()
         {
             return ObservableDictionary.ObserveAdd()
                 .Select(e => new CollectionAddEvent<TValue>(e.Index, e.Value.Value));
         }
 
-        Observable<CollectionRemoveEvent<TValue>> IVariableCollectionObserver<TValue>.ObserveRemove()
+        public Observable<CollectionRemoveEvent<TValue>> ObserveRemove()
         {
             return ObservableDictionary.ObserveRemove()
                 .Select(e => new CollectionRemoveEvent<TValue>(e.Index, e.Value.Value));
         }
 
-        Observable<CollectionReplaceEvent<TValue>> IVariableCollectionObserver<TValue>.ObserveReplace()
+        public Observable<CollectionReplaceEvent<TValue>> ObserveReplace()
         {
             return ObservableDictionary.ObserveReplace()
                 .Select(e => new CollectionReplaceEvent<TValue>(e.Index, e.OldValue.Value, e.NewValue.Value));
         }
 
-        Observable<CollectionMoveEvent<TValue>> IVariableCollectionObserver<TValue>.ObserveMove()
+        public Observable<CollectionMoveEvent<TValue>> ObserveMove()
         {
             return ObservableDictionary.ObserveMove()
                 .Select(e => new CollectionMoveEvent<TValue>(e.OldIndex, e.NewIndex, e.Value.Value));
         }
 
-        Observable<Unit> IVariableCollectionObserver<TValue>.ObserveReset()
+        public Observable<Unit> ObserveReset()
         {
             return ObservableDictionary.ObserveReset();
         }
 
-        Observable<int> IVariableCollectionObserver<TValue>.ObserveCountChanged()
+        public Observable<int> ObserveCountChanged()
         {
             return ObservableDictionary.ObserveCountChanged();
         }
 
-        Observable<TValue> IVariableCollectionElementObserver<TKey, TValue>.ObserveElement(TKey id)
+        public Observable<TValue> ObserveElement(TKey id)
         {
             var replaceObservable = ObservableDictionary.ObserveReplace()
                 .Where(e => e.NewValue.Key.Equals(id))
@@ -91,7 +91,7 @@ namespace TanitakaTech.StateVariable.VariableCollection
             return ElementReadResult.NotFound;
         }
         
-        IEnumerable<TValue> IVariableCollectionReader<TValue>.ReadAllElements()
+        public IEnumerable<TValue> ReadAllElements()
         {
             return ObservableDictionary.AsEnumerable()
                 .Select(pair => pair.Value);
@@ -102,22 +102,22 @@ namespace TanitakaTech.StateVariable.VariableCollection
             ObservableDictionary[id] = newElement;
         }
 
-        void IVariableCollectionModifier<TKey, TValue>.Add(TKey id, TValue element)
+        public void Add(TKey id, TValue element)
         {
             ObservableDictionary.Add(id, element);
         }
 
-        void IVariableCollectionModifier<TKey, TValue>.Remove(TKey id)
+        public void Remove(TKey id)
         {
             ObservableDictionary.Remove(id);
         }
 
-        void IVariableCollectionModifier<TKey, TValue>.Replace(TKey id, TValue newElement)
+        public void Replace(TKey id, TValue newElement)
         {
             SetElement(id, newElement);
         }
 
-        void IVariableCollectionModifier<TKey, TValue>.Reset(IEnumerable<KeyValuePair<TKey, TValue>> newCollection)
+        public void Reset(IEnumerable<KeyValuePair<TKey, TValue>> newCollection)
         {
             ObservableDictionary.Clear();
             if (newCollection == null) return;
