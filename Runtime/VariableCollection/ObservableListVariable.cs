@@ -106,6 +106,23 @@ namespace TanitakaTech.StateVariable.VariableCollection
             }
         }
 
+        public void SetElementWithPrevious(TKey id, Func<(bool hasPreviousValue, TValue previousElement), TValue> newElementSelector)
+        {
+            var alreadyElement = ObservableList.FirstOrDefault(e => ElementSelector(id, e));
+            bool isExist = alreadyElement != null;
+            var previous = isExist ? alreadyElement : default;
+            var newElement = newElementSelector((isExist, previous));
+            if (isExist)
+            {
+                var index = ObservableList.IndexOf(alreadyElement);
+                ObservableList[index] = newElement;
+            }
+            else
+            {
+                ObservableList.Add(newElement);
+            }
+        }
+
         public void Add(TKey id, TValue newElement)
         {
             ObservableList.Add(newElement);

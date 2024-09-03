@@ -102,6 +102,12 @@ namespace TanitakaTech.StateVariable.VariableCollection
             ObservableDictionary[id] = newElement;
         }
 
+        public void SetElementWithPrevious(TKey id, System.Func<(bool hasPreviousValue, TValue previousElement), TValue> newElementSelector)
+        {
+            bool hasPreviousValue = ObservableDictionary.TryGetValue(id, out var previous);
+            ObservableDictionary[id] = newElementSelector((hasPreviousValue, previous));
+        }
+
         public void Add(TKey id, TValue element)
         {
             ObservableDictionary.Add(id, element);

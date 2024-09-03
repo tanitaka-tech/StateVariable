@@ -76,3 +76,4 @@ openupm add com.tanitaka-tech.state-variable
 ## Required
 - [R3](https://github.com/Cysharp/R3)
 - [ObaservableCollections](https://github.com/Cysharp/ObservableCollections)
+- [ObaservableCollections.R3](https://github.com/Cysharp/ObservableCollections/tree/master/src/ObservableCollections.R3)

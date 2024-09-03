@@ -1,6 +1,5 @@
 ﻿using System;
 using R3;
-using UnityEngine;
 
 namespace TanitakaTech.StateVariable
 {
@@ -10,7 +9,7 @@ namespace TanitakaTech.StateVariable
         IVariableObserver<T>,
         IDisposable
     {
-        [SerializeField] private SerializableReactiveProperty<T> _reactiveProperty;
+        private ReactiveProperty<T> _reactiveProperty;
 
         public ObservableVariable(T initialValue)
         {
