@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.1;net6.0;net8.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>12</LangVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>1701;1702;1591;1573</NoWarn>
+
+        <!-- NuGet Packaging -->
+        <PackageTags>state variable</PackageTags>
+        <Description>A library for managing state variables</Description>
+        <Authors>tanitaka-tech</Authors>
+        <RepositoryUrl>https://github.com/tanitaka-tech/StateVariable</RepositoryUrl>
+        <PackageId>StateVariable</PackageId>
+        <Version>1.2.3</Version>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="R3" Version="1.2.8" />
+        <PackageReference Include="ObservableCollections" Version="2.2.2" />
+        <PackageReference Include="ObservableCollections.R3" Version="2.2.2" />
+
+        <!-- Exclude Tests Folder -->
+        <Content Remove="Tests\**" />
+        <Compile Remove="Tests\**" />
+        <EmbeddedResource Remove="Tests\**" />
+        <None Remove="Tests\**" />
+    </ItemGroup>
+
+</Project>
