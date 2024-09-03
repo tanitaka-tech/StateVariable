@@ -16,7 +16,7 @@
         <Authors>tanitaka-tech</Authors>
         <RepositoryUrl>https://github.com/tanitaka-tech/StateVariable</RepositoryUrl>
         <PackageId>StateVariable</PackageId>
-        <Version>1.2.3</Version>
+        <Version>1.2.4</Version>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
     <ItemGroup>
