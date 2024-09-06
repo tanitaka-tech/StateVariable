@@ -1,6 +1,5 @@
-[![openupm](https://img.shields.io/npm/v/com.tanitaka.state-variable?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.tanitaka.state-variable/)
 ![license](https://img.shields.io/github/license/tanitaka-tech/StateVariable)
-
+![nuget](https://www.nuget.org/packages/StateVariable/)
 
 ## Features 🚀
 - Variable Set/Read/Observe
@@ -8,7 +7,6 @@
 - DependencyVariable/HalfDependencyVariable
 
 ## Variable List
-
 
 | class                        | summary                                                            | implements interface                                                                                                                                                                              |
 | ---------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -62,16 +60,12 @@ void Start()
 
 ## Installation ☘️
 
-### Install via git URL
-1. Open the Package Manager
-1. Press [＋▼] button and click Add package from git URL...
-1. Enter the following:
-    - https://github.com/tanitaka-tech/StateVariable.git
-
-### ~~Install via OpenUPM~~ (not yet)
-```sh
-openupm add com.tanitaka-tech.state-variable
+### Install via nuget
+1. Run the following:
 ```
+dotnet add package StateVariable --version 1.2.4
+```
+
 
 ## Required
 - [R3](https://github.com/Cysharp/R3)
