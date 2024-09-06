@@ -1,5 +1,6 @@
 ![license](https://img.shields.io/github/license/tanitaka-tech/StateVariable)
-![nuget](https://www.nuget.org/packages/StateVariable/)
+
+[nuget](https://www.nuget.org/packages/StateVariable/)
 
 ## Features 🚀
 - Variable Set/Read/Observe
