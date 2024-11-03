@@ -1,5 +1,6 @@
 ![license](https://img.shields.io/github/license/tanitaka-tech/StateVariable)
-![nuget](https://www.nuget.org/packages/StateVariable/)
+
+[nuget](https://www.nuget.org/packages/StateVariable/)
 
 ## Mission of this Library
 - To provide a simple and easy-to-use state management library for Unity.(Like Redux or Svelte.store)
