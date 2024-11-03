@@ -1,31 +1,34 @@
 ![license](https://img.shields.io/github/license/tanitaka-tech/StateVariable)
 ![nuget](https://www.nuget.org/packages/StateVariable/)
 
-## Features 🚀
+## Mission of this Library
+- To provide a simple and easy-to-use state management library for Unity.(Like Redux or Svelte.store)
+
+## Features 🌟
 - Variable Set/Read/Observe
 - VariableCollection
 - DependencyVariable/HalfDependencyVariable
 
 ## Variable List
 
-| class                        | summary                                                            | implements interface                                                                                                                                                                              |
-| ---------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **ObservableVariable**       | A state variable that can be observed                              | IVariableReader, IVariableObserver, IVariableSetter, IDisposable                                                                                                                                  |
-| **Variable**                 | A state variable that cannot be observed but is more memory-efficient than ObservableVariable | IVariableReader, IVariableSetter                                                                                                                                                                  |
-| **DependencyVariable**       | A variable that derives results from other variables and triggers them | IVariableReader, IVariableObserver                                                                                                                                                                |
-| **HalfDependencyVariable**       | A Variable that derive results from other variables and their own variable and trigger them | IVariableReader, IVariableSetter, IVariableObserver                                                                                                                                                                |
-| **ObservableListVariable**   | A collection of Variables (internally implemented as a List)       | IVariableReader, IVariableSetter, IVariableCollectionObserver, IVariableCollectionElementObserver, IVariableCollectionElementSetter, IVariableCollectionModifier                                  |
-| **ObservableDictionaryVariable** | A collection of Variables (internally implemented as a Dictionary) | IVariableReader, IVariableSetter, IVariableCollectionObserver, IVariableCollectionElementObserver, IVariableCollectionElementSetter, IVariableCollectionModifier                                  |
+| class                                   | summary                                                            | implements interface                                                                                                                                                                              |
+|-----------------------------------------| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ObservableVariable**  <br/>**SubjectVariable** | A state variable that can be observed                              | IVariableReader, IVariableObserver, IVariableSetter, IDisposable                                                                                                                                  |
+| **Variable**                            | A state variable that cannot be observed but is more memory-efficient than ObservableVariable | IVariableReader, IVariableSetter                                                                                                                                                                  |
+| **DependencyVariable**                  | A variable that derives results from other variables and triggers them | IVariableReader, IVariableObserver                                                                                                                                                                |
+| **HalfDependencyVariable**              | A Variable that derive results from other variables and their own variable and trigger them | IVariableReader, IVariableSetter, IVariableObserver                                                                                                                                                                |
+| **ObservableListVariable**              | A collection of Variables (internally implemented as a List)       | IVariableReader, IVariableSetter, IVariableCollectionObserver, IVariableCollectionElementObserver, IVariableCollectionElementSetter, IVariableCollectionModifier                                  |
+| **ObservableDictionaryVariable**        | A collection of Variables (internally implemented as a Dictionary) | IVariableReader, IVariableSetter, IVariableCollectionObserver, IVariableCollectionElementObserver, IVariableCollectionElementSetter, IVariableCollectionModifier                                  |
 
-## Concept
+## Usage Example(This Example used a Zenject)
 
-それぞれのVariableはDIコンテナの適切なContextにBindし、各Objectで必要な依存を取得します。
+Each Variable is bound to the appropriate context of the DI container, and each object obtains the necessary dependencies.
 
 ``` csharp
 
-// ----- 任意のDIコンテナのInstaller(このコード例はZenject)
+// ----- Installer
 var testVariable = new ObservableVariable<Test>(new Test());
-testVariable.AddTo(this);    // ObservableVariableは内部的にReactivePropertyを使用しているため、Dispose管理する必要がある
+testVariable.AddTo(this);
 Container.BindInstance<IVariableReader<Test>>(testVariable);
 Container.BindInstance<IVariableObserver<Test>>(testVariable);
 Container.BindInstance<IVariableSetter<Test>>(testVariable);
@@ -33,7 +36,6 @@ Container.BindInstance<IVariableSetter<Test>>(testVariable);
 ```
 
 ``` csharp
-// ----- 任意のObject内
 [Inject] IVariableObserver<Test> _testObserver;
 [Inject] IVariableReader<Test> _testReader;
 [Inject] IVariableSetter<Test> _testSetter;
@@ -45,18 +47,14 @@ void Start()
     Test test = _testReader.Read();
     _testSetter.Set(new Test());
 
-    // ObserverはReadも可能
+    // Observer can also read
     test = _testObserver.Read();
 
-    // SetterもReadできる
+    // Setter can also read
     test = _testSetter.Read();
 }
 
 ```
-
-- 機能毎に3つのinterfaceが用意されており、必要なinterfaceのみを注入することでモジュールやオブジェクトの責務を明確にする。
-- VariableはStateVariableの略であり、StateVariableには「とあるContext内で共有する状態変数」という意味合いを込めている。そのため、型シグネチャによって共有されている変数ということを強調できる。
-- DependencyVariableにより、状態変数から導出される変数を状態変数と同じシグネチャでハンドリングできる
 
 ## Installation ☘️
 
@@ -65,7 +63,6 @@ void Start()
 ```
 dotnet add package StateVariable --version 1.2.4
 ```
-
 
 ## Required
 - [R3](https://github.com/Cysharp/R3)
