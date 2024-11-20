@@ -4,9 +4,9 @@ using R3;
 
 namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public interface IVariableCollectionObserver<T> : 
-        IVariableCollectionReader<T>,
-        IVariableObserver<IEnumerable<T>>
+    public interface IStateCollectionObserver<T> :
+        IStateCollectionReader<T>,
+        IStateObserver<IEnumerable<T>>
     {
         Observable<CollectionAddEvent<T>> ObserveAdd();
         Observable<CollectionRemoveEvent<T>> ObserveRemove();
@@ -30,7 +30,7 @@ namespace TanitakaTech.StateVariable.VariableCollection
                 .ThrottleLastFrame(1);
         }
 
-        Observable<IEnumerable<T>> IVariableObserver<IEnumerable<T>>.Observe()
+        Observable<IEnumerable<T>> IStateObserver<IEnumerable<T>>.Observe()
         {
             return ObserveAllChangesInternal()
                 .Select(_ => Read());

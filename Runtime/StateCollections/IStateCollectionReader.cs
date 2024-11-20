@@ -2,11 +2,11 @@
 
 namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public interface IVariableCollectionReader<T> : IVariableReader<IEnumerable<T>>
+    public interface IStateCollectionReader<T> : IStateReader<IEnumerable<T>>
     {
         IEnumerable<T> ReadAllElements();
         
-        IEnumerable<T> IVariableReader<IEnumerable<T>> .Read()
+        IEnumerable<T> IStateReader<IEnumerable<T>> .Read()
         {
             return ReadAllElements();
         }

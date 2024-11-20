@@ -2,7 +2,7 @@
 
 namespace TanitakaTech.StateVariable
 {
-    public interface IVariableObserver<T> : IVariableReader<T>
+    public interface IStateObserver<T> : IStateReader<T>
     {
         Observable<T> Observe();
     }

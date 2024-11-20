@@ -5,19 +5,19 @@ namespace TanitakaTech.StateVariable.R3Extensions
 {
     public static class StateVariableR3Extensions
     {
-        public static IVariableObserver<T> ToVariableObserver<T>(this Observable<T> observable, out IDisposable disposable)
+        public static IStateObserver<T> ToVariableObserver<T>(this Observable<T> observable, out IDisposable disposable)
         {
-            var bridge = new VariableObserverBridge<T>(observable, out disposable);
+            var bridge = new StateObserverBridge<T>(observable, out disposable);
             return bridge;
         }
 
-        private class VariableObserverBridge<T> : 
-            IVariableObserver<T>
+        private class StateObserverBridge<T> : 
+            IStateObserver<T>
         {
             private Observable<T> Observable { get; }
             private T _currentValue;
         
-            public VariableObserverBridge(Observable<T> observable, out IDisposable disposable)
+            public StateObserverBridge(Observable<T> observable, out IDisposable disposable)
             {
                 Observable = observable;
                 disposable = Observable
@@ -27,8 +27,8 @@ namespace TanitakaTech.StateVariable.R3Extensions
                     });
             }
 
-            T IVariableReader<T>.Read() => _currentValue;
-            Observable<T> IVariableObserver<T>.Observe() => Observable;
+            T IStateReader<T>.Read() => _currentValue;
+            Observable<T> IStateObserver<T>.Observe() => Observable;
         }
     }
 }

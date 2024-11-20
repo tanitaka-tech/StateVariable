@@ -6,20 +6,20 @@ using R3;
 
 namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public class ObservableListVariable<TKey, TValue> :
-        IVariableCollectionObserver<TValue>,
-        IVariableCollectionElementObserver<TKey, TValue>,
-        IVariableCollectionElementSetter<TKey, TValue>,
-        IVariableCollectionModifier<TKey, TValue>
+    public class ObservableListState<TKey, TValue> :
+        IStateCollectionObserver<TValue>,
+        IStateCollectionElementObserver<TKey, TValue>,
+        IStateCollectionElementSetter<TKey, TValue>,
+        IStateCollectionModifier<TKey, TValue>
     {
         private ObservableList<TValue> ObservableList { get; }
         private Func<TKey, TValue, bool> ElementSelector { get; }
 
-        public ObservableListVariable(Func<TKey, TValue, bool> elementSelector): this(new ObservableList<TValue>(), elementSelector)
+        public ObservableListState(Func<TKey, TValue, bool> elementSelector): this(new ObservableList<TValue>(), elementSelector)
         {
         }
         
-        public ObservableListVariable(ObservableList<TValue> observableList, Func<TKey, TValue, bool> elementSelector)
+        public ObservableListState(ObservableList<TValue> observableList, Func<TKey, TValue, bool> elementSelector)
         {
             ObservableList = observableList;
             ElementSelector = elementSelector;

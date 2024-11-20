@@ -5,19 +5,19 @@ using R3;
 
 namespace TanitakaTech.StateVariable.VariableCollection
 {
-    public class ObservableDictionaryVariable<TKey, TValue> : 
-        IVariableCollectionObserver<TValue>,
-        IVariableCollectionElementObserver<TKey, TValue>,
-        IVariableCollectionElementSetter<TKey, TValue>,
-        IVariableCollectionModifier<TKey, TValue>
+    public class ObservableDictionaryState<TKey, TValue> :
+        IStateCollectionObserver<TValue>,
+        IStateCollectionElementObserver<TKey, TValue>,
+        IStateCollectionElementSetter<TKey, TValue>,
+        IStateCollectionModifier<TKey, TValue>
     {
         private ObservableCollections.ObservableDictionary<TKey, TValue> ObservableDictionary { get; }
 
-        public ObservableDictionaryVariable() : this(new ObservableCollections.ObservableDictionary<TKey, TValue>())
+        public ObservableDictionaryState() : this(new ObservableCollections.ObservableDictionary<TKey, TValue>())
         {
         }
         
-        public ObservableDictionaryVariable(ObservableCollections.ObservableDictionary<TKey, TValue> observableDictionary)
+        public ObservableDictionaryState(ObservableCollections.ObservableDictionary<TKey, TValue> observableDictionary)
         {
             ObservableDictionary = observableDictionary;
         }

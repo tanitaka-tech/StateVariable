@@ -1,6 +1,6 @@
 ﻿namespace TanitakaTech.StateVariable
 {
-    public interface IVariableSetter<T> : IVariableReader<T>
+    public interface IStateSetter<T> : IStateReader<T>
     {
         public void Set(T value);
     }

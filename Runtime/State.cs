@@ -1,11 +1,11 @@
 ﻿namespace TanitakaTech.StateVariable
 {
-    public class Variable<T> :
-        IVariableSetter<T>
+    public class State<T> :
+        IStateSetter<T>
     {
         private T _variable;
 
-        public Variable(T initialValue)
+        public State(T initialValue)
         {
             _variable = initialValue;
         }
