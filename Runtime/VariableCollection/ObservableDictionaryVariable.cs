@@ -48,7 +48,7 @@ namespace TanitakaTech.StateVariable.VariableCollection
 
         public Observable<Unit> ObserveReset()
         {
-            return ObservableDictionary.ObserveReset();
+            return ObservableDictionary.ObserveReset().AsUnitObservable();
         }
 
         public Observable<int> ObserveCountChanged()
