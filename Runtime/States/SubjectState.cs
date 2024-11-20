@@ -3,15 +3,15 @@ using R3;
 
 namespace TanitakaTech.StateVariable
 {
-    public class SubjectVariable<T> :
-        IVariableSetter<T>,
-        IVariableObserver<T>,
+    public class SubjectState<T> :
+        IStateSetter<T>,
+        IStateObserver<T>,
         IDisposable
     {
         private Subject<T> Subject { get; }
         private T _beforeValue;
 
-        public SubjectVariable(T initialValue)
+        public SubjectState(T initialValue)
         {
             Subject = new Subject<T>();
             Set(initialValue);

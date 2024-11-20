@@ -4,14 +4,14 @@ using R3;
 namespace TanitakaTech.StateVariable
 {
     [Serializable]
-    public class ObservableVariable<T> : 
-        IVariableSetter<T>,
-        IVariableObserver<T>,
+    public class ObservableState<T> : 
+        IStateSetter<T>,
+        IStateObserver<T>,
         IDisposable
     {
         private ReactiveProperty<T> _reactiveProperty;
 
-        public ObservableVariable(T initialValue)
+        public ObservableState(T initialValue)
         {
             _reactiveProperty = new(initialValue);
         }
