@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TanitakaTech.StateVariable.VariableCollection
+namespace TanitakaTech.StateVariable.StateCollections
 {
     public interface IStateCollectionElementSetter<TKey, TValue> : IStateCollectionElementReader<TKey, TValue>
     {
