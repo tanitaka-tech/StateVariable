@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TanitakaTech.StateVariable.VariableCollection
+namespace TanitakaTech.StateVariable.StateCollections
 {
     public interface IStateCollectionReader<T> : IStateReader<IEnumerable<T>>
     {

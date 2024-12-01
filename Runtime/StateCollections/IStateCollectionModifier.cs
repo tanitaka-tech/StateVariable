@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TanitakaTech.StateVariable.VariableCollection
+namespace TanitakaTech.StateVariable.StateCollections
 {
     public interface IStateCollectionModifier<TKey, TValue> : IStateCollectionElementSetter<TKey, TValue>
     {

@@ -1,4 +1,4 @@
-﻿namespace TanitakaTech.StateVariable.VariableCollection
+﻿namespace TanitakaTech.StateVariable.StateCollections
 {
     public interface IStateCollectionElementReader<TKey, TValue> :
         IStateCollectionReader<TValue>
