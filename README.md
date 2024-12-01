@@ -62,7 +62,7 @@ void Start()
 ### Install via nuget
 1. Run the following:
 ```
-dotnet add package StateVariable --version 1.3.0
+dotnet add package StateVariable --version 1.4.0
 ```
 
 ## Required
