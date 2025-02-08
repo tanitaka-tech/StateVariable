@@ -59,6 +59,9 @@ void Start()
 
 ## Installation ☘️
 
+### Unity
+To install in Unity, use [NugetForUnity](https://github.com/GlitchEnzo/NuGetForUnity).
+
 ### Install via nuget
 1. Run the following:
 ```
