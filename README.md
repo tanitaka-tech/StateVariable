@@ -60,7 +60,16 @@ void Start()
 ## Installation ☘️
 
 ### Unity
-To install in Unity, use [NugetForUnity](https://github.com/GlitchEnzo/NuGetForUnity).
+#### Install via git URL
+1. Open the Package Manager
+2. Press [＋▼] button and click Add package from git URL...
+3. Enter the following:
+`https://github.com/tanitaka-tech/UnityProcessManager.git`
+
+#### Install via NugetForUnity
+1. Install [NugetForUnity](https://github.com/GlitchEnzo/NuGetForUnity).
+2. Search for `StateVariable` in the NugetForUnity window.
+3. Click the `Install` button.
 
 ### Install via nuget
 1. Run the following:
