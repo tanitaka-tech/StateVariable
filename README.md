@@ -64,7 +64,7 @@ void Start()
 1. Open the Package Manager
 2. Press [＋▼] button and click Add package from git URL...
 3. Enter the following:
-`https://github.com/tanitaka-tech/UnityProcessManager.git`
+`https://github.com/tanitaka-tech/StateVariable.git`
 
 #### Install via NugetForUnity
 1. Install [NugetForUnity](https://github.com/GlitchEnzo/NuGetForUnity).
