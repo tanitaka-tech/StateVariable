@@ -4,22 +4,22 @@ using R3;
 namespace TanitakaTech.StateVariable.Tests
 {
     [TestFixture]
-    public class DependencyVariableTest
+    public class DependencyStateTest
     {
         [Test]
         public void ShouldFireOnlyOnceWithLastSetValueWhenSetMultipleTimesBeforeObserve()
         {
             // Arrange
-            using var observableVariable = new ObservableVariable<int>(0);
+            using var observableState = new ObservableState<int>(0);
             int observedValue = 0;
             int observeCount = 0;
             
-            var dependencyVariable = DependencyVariable<bool>.Create(observableVariable, (_) => _);
+            var dependencyState = DependencyState<bool>.Create(observableState, (_) => _);
 
             // Act
-            observableVariable.Set(5);
-            observableVariable.Set(10);
-            using var disposable = dependencyVariable.Observe()
+            observableState.Set(5);
+            observableState.Set(10);
+            using var disposable = dependencyState.Observe()
                 .Subscribe(value =>
                 {
                     observedValue = value;
@@ -35,14 +35,14 @@ namespace TanitakaTech.StateVariable.Tests
         public void ShouldFireOnlyOnceWithInitialValueWhenNotSetBeforeObserve()
         {
             // Arrange
-            using var observableVariable = new ObservableVariable<int>(default);
+            using var observableState = new ObservableState<int>(default);
             int observedValue = 0;
             int observeCount = 0;
             
-            var dependencyVariable = DependencyVariable<int>.Create(observableVariable, (_) => _);
+            var dependencyState = DependencyState<int>.Create(observableState, (_) => _);
 
             // Act
-            using var disposable = dependencyVariable.Observe()
+            using var disposable = dependencyState.Observe()
                 .Subscribe(value =>
                 {
                     observedValue = value;

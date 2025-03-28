@@ -10,7 +10,7 @@ namespace TanitakaTech.StateVariable.Tests
         public void ShouldFireOnlyOnceWithLastSetValueWhenSetMultipleTimesBeforeObserve()
         {
             // Arrange
-            using var observableVariable = new ObservableVariable<int>(0);
+            using var observableVariable = new ObservableState<int>(0);
             int observedValue = 0;
             int observeCount = 0;
 
@@ -33,7 +33,7 @@ namespace TanitakaTech.StateVariable.Tests
         public void ShouldFireOnlyOnceWithInitialValueWhenNotSetBeforeObserve()
         {
             // Arrange
-            using var observableVariable = new ObservableVariable<int>(default);
+            using var observableVariable = new ObservableState<int>(default);
             int observedValue = 0;
             int observeCount = 0;
 

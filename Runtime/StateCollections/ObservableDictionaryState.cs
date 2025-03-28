@@ -8,7 +8,6 @@ namespace TanitakaTech.StateVariable.StateCollections
     public class ObservableDictionaryState<TKey, TValue> :
         IStateCollectionObserver<TValue>,
         IStateCollectionElementObserver<TKey, TValue>,
-        IStateCollectionElementSetter<TKey, TValue>,
         IStateCollectionModifier<TKey, TValue>
     {
         private ObservableCollections.ObservableDictionary<TKey, TValue> ObservableDictionary { get; }
@@ -132,6 +131,11 @@ namespace TanitakaTech.StateVariable.StateCollections
             {
                 ObservableDictionary.Add(pair);
             }
+        }
+
+        public void Reset()
+        {
+            ObservableDictionary.Clear();
         }
     }
 }
