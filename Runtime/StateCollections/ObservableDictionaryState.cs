@@ -10,7 +10,7 @@ namespace TanitakaTech.StateVariable.StateCollections
         IStateCollectionElementObserver<TKey, TValue>,
         IStateCollectionModifier<TKey, TValue>
     {
-        private ObservableCollections.ObservableDictionary<TKey, TValue> ObservableDictionary { get; }
+        private readonly ObservableDictionary<TKey, TValue> _observableDictionary;
 
         public ObservableDictionaryState() : this(new ObservableCollections.ObservableDictionary<TKey, TValue>())
         {
@@ -18,54 +18,54 @@ namespace TanitakaTech.StateVariable.StateCollections
         
         public ObservableDictionaryState(ObservableCollections.ObservableDictionary<TKey, TValue> observableDictionary)
         {
-            ObservableDictionary = observableDictionary;
+            _observableDictionary = observableDictionary;
         }
         
         public Observable<CollectionAddEvent<TValue>> ObserveAdd()
         {
-            return ObservableDictionary.ObserveAdd()
+            return _observableDictionary.ObserveAdd()
                 .Select(e => new CollectionAddEvent<TValue>(e.Index, e.Value.Value));
         }
 
         public Observable<CollectionRemoveEvent<TValue>> ObserveRemove()
         {
-            return ObservableDictionary.ObserveRemove()
+            return _observableDictionary.ObserveRemove()
                 .Select(e => new CollectionRemoveEvent<TValue>(e.Index, e.Value.Value));
         }
 
         public Observable<CollectionReplaceEvent<TValue>> ObserveReplace()
         {
-            return ObservableDictionary.ObserveReplace()
+            return _observableDictionary.ObserveReplace()
                 .Select(e => new CollectionReplaceEvent<TValue>(e.Index, e.OldValue.Value, e.NewValue.Value));
         }
 
         public Observable<CollectionMoveEvent<TValue>> ObserveMove()
         {
-            return ObservableDictionary.ObserveMove()
+            return _observableDictionary.ObserveMove()
                 .Select(e => new CollectionMoveEvent<TValue>(e.OldIndex, e.NewIndex, e.Value.Value));
         }
 
         public Observable<Unit> ObserveReset()
         {
-            return ObservableDictionary.ObserveReset().AsUnitObservable();
+            return _observableDictionary.ObserveReset().AsUnitObservable();
         }
 
         public Observable<int> ObserveCountChanged()
         {
-            return ObservableDictionary.ObserveCountChanged();
+            return _observableDictionary.ObserveCountChanged();
         }
 
         public Observable<TValue> ObserveElement(TKey id)
         {
-            var replaceObservable = ObservableDictionary.ObserveReplace()
+            var replaceObservable = _observableDictionary.ObserveReplace()
                 .Where(e => e.NewValue.Key.Equals(id))
                 .Select(e => e.NewValue.Value);
-            var resetObservable = ObservableDictionary.ObserveReset()
+            var resetObservable = _observableDictionary.ObserveReset()
                 .Select(_ => (TValue)default);
-            var addObservable = ObservableDictionary.ObserveAdd()
+            var addObservable = _observableDictionary.ObserveAdd()
                 .Where(e => e.Value.Key.Equals(id))
                 .Select(e => e.Value.Value);
-            var removeObservable = ObservableDictionary.ObserveRemove()
+            var removeObservable = _observableDictionary.ObserveRemove()
                 .Where(e => e.Value.Key.Equals(id))
                 .Select(_ => (TValue)default);
             
@@ -76,12 +76,12 @@ namespace TanitakaTech.StateVariable.StateCollections
 
         public TValue ReadElement(TKey id)
         {
-            return ObservableDictionary[id];
+            return _observableDictionary[id];
         }
         
         public ElementReadResult TryReadElement(TKey id, out TValue element)
         {
-            if (ObservableDictionary.TryGetValue(id, out var value))
+            if (_observableDictionary.TryGetValue(id, out var value))
             {
                 element = value;
                 return ElementReadResult.Success;
@@ -92,29 +92,29 @@ namespace TanitakaTech.StateVariable.StateCollections
         
         public IEnumerable<TValue> ReadAllElements()
         {
-            return ObservableDictionary.AsEnumerable()
+            return _observableDictionary.AsEnumerable()
                 .Select(pair => pair.Value);
         }
 
         public void SetElement(TKey id, TValue newElement)
         {
-            ObservableDictionary[id] = newElement;
+            _observableDictionary[id] = newElement;
         }
 
         public void SetElementWithPrevious(TKey id, System.Func<(bool hasPreviousValue, TValue previousElement), TValue> newElementSelector)
         {
-            bool hasPreviousValue = ObservableDictionary.TryGetValue(id, out var previous);
-            ObservableDictionary[id] = newElementSelector((hasPreviousValue, previous));
+            bool hasPreviousValue = _observableDictionary.TryGetValue(id, out var previous);
+            _observableDictionary[id] = newElementSelector((hasPreviousValue, previous));
         }
 
         public void Add(TKey id, TValue element)
         {
-            ObservableDictionary.Add(id, element);
+            _observableDictionary.Add(id, element);
         }
 
         public void Remove(TKey id)
         {
-            ObservableDictionary.Remove(id);
+            _observableDictionary.Remove(id);
         }
 
         public void Replace(TKey id, TValue newElement)
@@ -124,18 +124,18 @@ namespace TanitakaTech.StateVariable.StateCollections
 
         public void Reset(IEnumerable<KeyValuePair<TKey, TValue>> newCollection)
         {
-            ObservableDictionary.Clear();
+            _observableDictionary.Clear();
             if (newCollection == null) return;
             
             foreach (var pair in newCollection)
             {
-                ObservableDictionary.Add(pair);
+                _observableDictionary.Add(pair);
             }
         }
 
         public void Reset()
         {
-            ObservableDictionary.Clear();
+            _observableDictionary.Clear();
         }
     }
 }
