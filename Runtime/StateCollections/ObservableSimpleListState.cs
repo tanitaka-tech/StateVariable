@@ -11,56 +11,56 @@ namespace TanitakaTech.StateVariable.StateCollections
         IStateCollectionElementObserver<int, TValue>,   // CAUTION: Observing Element can be changed by Add/Remove/Replace
         IStateCollectionModifier<int, TValue>
     {
-        private ObservableList<TValue> ObservableList { get; }
+        private readonly ObservableList<TValue> _observableList;
 
         public ObservableSimpleListState(ObservableList<TValue> observableList)
         {
-            ObservableList = observableList;
+            _observableList = observableList;
         }
 
         public ObservableSimpleListState() : this(new ObservableList<TValue>()){}
 
         public Observable<CollectionAddEvent<TValue>> ObserveAdd()
         {
-            return ObservableList.ObserveAdd();
+            return _observableList.ObserveAdd();
         }
 
         public Observable<CollectionRemoveEvent<TValue>> ObserveRemove()
         {
-            return ObservableList.ObserveRemove();
+            return _observableList.ObserveRemove();
         }
 
         public Observable<CollectionReplaceEvent<TValue>> ObserveReplace()
         {
-            return ObservableList.ObserveReplace();
+            return _observableList.ObserveReplace();
         }
 
         public Observable<CollectionMoveEvent<TValue>> ObserveMove()
         {
-            return ObservableList.ObserveMove();
+            return _observableList.ObserveMove();
         }
 
         public Observable<Unit> ObserveReset()
         {
-            return ObservableList.ObserveReset().AsUnitObservable();
+            return _observableList.ObserveReset().AsUnitObservable();
         }
 
         public Observable<int> ObserveCountChanged()
         {
-            return ObservableList.ObserveCountChanged();
+            return _observableList.ObserveCountChanged();
         }
 
         public Observable<TValue> ObserveElement(int id)
         {
-            var replaceObservable = ObservableList.ObserveReplace()
+            var replaceObservable = _observableList.ObserveReplace()
                 .Where(e => e.Index == id)
                 .Select(e => e.NewValue);
-            var resetObservable = ObservableList.ObserveReset()
+            var resetObservable = _observableList.ObserveReset()
                 .Select(_ => (TValue)default);
-            var addObservable = ObservableList.ObserveAdd()
+            var addObservable = _observableList.ObserveAdd()
                 .Where(e => e.Index == id)
                 .Select(e => e.Value);
-            var removeObservable = ObservableList.ObserveRemove()
+            var removeObservable = _observableList.ObserveRemove()
                 .Where(e => e.Index == id)
                 .Select(_ => (TValue)default);
 
@@ -71,7 +71,7 @@ namespace TanitakaTech.StateVariable.StateCollections
 
         public TValue ReadElement(int id)
         {
-            return ObservableList[id];
+            return _observableList[id];
         }
 
         public ElementReadResult TryReadElement(int id, out TValue element1)
@@ -82,47 +82,47 @@ namespace TanitakaTech.StateVariable.StateCollections
 
         public IEnumerable<TValue> ReadAllElements()
         {
-            return ObservableList;
+            return _observableList;
         }
 
         public void SetElement(int id, TValue newElement)
         {
-            bool isExist = ObservableList.Count > id;
+            bool isExist = _observableList.Count > id;
             if (isExist)
             {
-                var alreadyElement = ObservableList[id];
-                var index = ObservableList.IndexOf(alreadyElement);
-                ObservableList[index] = newElement;
+                var alreadyElement = _observableList[id];
+                var index = _observableList.IndexOf(alreadyElement);
+                _observableList[index] = newElement;
             }
             else
             {
-                ObservableList.Add(newElement);
+                _observableList.Add(newElement);
             }
         }
 
         public void SetElementWithPrevious(int id, Func<(bool hasPreviousValue, TValue previousElement), TValue> newElementSelector)
         {
-            bool isExist = ObservableList.Count > id;
+            bool isExist = _observableList.Count > id;
             if (!isExist)
             {
-                ObservableList.Add(newElementSelector((false, default)));
+                _observableList.Add(newElementSelector((false, default)));
                 return;
             }
-            var alreadyElement = ObservableList[id];
-            ObservableList[id] = newElementSelector((true, alreadyElement));
+            var alreadyElement = _observableList[id];
+            _observableList[id] = newElementSelector((true, alreadyElement));
         }
 
         public void Add(int id, TValue newElement)
         {
-            ObservableList.Add(newElement);
+            _observableList.Add(newElement);
         }
 
         public void Remove(int id)
         {
-            bool isExist = ObservableList.Count > id;
+            bool isExist = _observableList.Count > id;
             if (isExist)
             {
-                ObservableList.RemoveAt(id);
+                _observableList.RemoveAt(id);
             }
         }
 
@@ -133,7 +133,7 @@ namespace TanitakaTech.StateVariable.StateCollections
 
         public void Reset(IEnumerable<KeyValuePair<int, TValue>> newCollection)
         {
-            ObservableList.Clear();
+            _observableList.Clear();
             if (newCollection == null)
             {
                 return;
@@ -143,13 +143,13 @@ namespace TanitakaTech.StateVariable.StateCollections
             var addRange = newCollection.Select(pair => pair.Value).ToList();
             foreach (var value in addRange)
             {
-                ObservableList.Add(value);
+                _observableList.Add(value);
             }
         }
 
         public void Reset()
         {
-            ObservableList.Clear();
+            _observableList.Clear();
         }
     }
 }
