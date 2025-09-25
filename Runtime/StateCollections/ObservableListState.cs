@@ -9,7 +9,6 @@ namespace TanitakaTech.StateVariable.StateCollections
     public class ObservableListState<TKey, TValue> :
         IStateCollectionObserver<TValue>,
         IStateCollectionElementObserver<TKey, TValue>,
-        IStateCollectionElementSetter<TKey, TValue>,
         IStateCollectionModifier<TKey, TValue>
     {
         private ObservableList<TValue> ObservableList { get; }
@@ -156,6 +155,11 @@ namespace TanitakaTech.StateVariable.StateCollections
             {
                 ObservableList.Add(value);
             }
+        }
+
+        public void Reset()
+        {
+            ObservableList.Clear();
         }
     }
 }
