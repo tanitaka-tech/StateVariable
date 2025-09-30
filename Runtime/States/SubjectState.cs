@@ -8,28 +8,28 @@ namespace TanitakaTech.StateVariable
         IStateObserver<T>,
         IDisposable
     {
-        private Subject<T> Subject { get; }
+        private readonly Subject<T> _subject;
         private T _beforeValue;
 
         public SubjectState(T initialValue)
         {
-            Subject = new Subject<T>();
+            _subject = new Subject<T>();
             Set(initialValue);
         }
 
         public void Set(T value)
         {
-            Subject.OnNext(value);
+            _subject.OnNext(value);
             _beforeValue = value;
         }
 
         public T Read() => _beforeValue;
 
-        public Observable<T> Observe() => Subject;
+        public Observable<T> Observe() => _subject;
 
         public void Dispose()
         {
-            Subject.Dispose();
+            _subject.Dispose();
         }
     }
 }

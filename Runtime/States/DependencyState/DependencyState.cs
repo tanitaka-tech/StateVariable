@@ -5,29 +5,29 @@ namespace TanitakaTech.StateVariable
 {
     public class DependencyState<T> : IStateObserver<T>
     {
-        public T Read() => ResultSelector();
-        public Observable<T> Observe() => ResultObservable;
-        
-        private Observable<T> ResultObservable { get; }
-        private Func<T> ResultSelector { get; }
-        
+        public T Read() => _resultSelector();
+        public Observable<T> Observe() => _resultObservable;
+
+        private readonly Observable<T> _resultObservable;
+        private readonly Func<T> _resultSelector;
+
         public DependencyState(Observable<T> resultObservable, Func<T> resultSelector)
         {
-            ResultSelector = resultSelector;
-            ResultObservable = resultObservable;
+            _resultSelector = resultSelector;
+            _resultObservable = resultObservable;
         }
-        
-        public static DependencyState<TR> Create<T1, TR>(IStateObserver<T1> source1, Func<T1, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, Tr>(IStateObserver<T1> source1, Func<T1, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: source1.Observe().Select(resultSelector).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read())
             );
         }
-        
-        public static DependencyState<TR> Create<T1, T2, TR>(IStateObserver<T1> source1, IStateObserver<T2> source2, Func<T1, T2, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, T2, Tr>(IStateObserver<T1> source1, IStateObserver<T2> source2, Func<T1, T2, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
                     source1.Observe(), source2.Observe(),
                     resultSelector
@@ -35,21 +35,21 @@ namespace TanitakaTech.StateVariable
                 resultSelector: () => resultSelector(source1.Read(), source2.Read())
             );
         }
-        
-        public static DependencyState<TR> Create<T1, T2, T3, TR>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, Func<T1, T2, T3, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, T2, T3, Tr>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, Func<T1, T2, T3, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
-                    source1.Observe(), source2.Observe(), source3.Observe(), 
+                    source1.Observe(), source2.Observe(), source3.Observe(),
                     resultSelector
                     ).DistinctUntilChanged(),
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read())
                 );
         }
-        
-        public static DependencyState<TR> Create<T1, T2, T3, T4, TR>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, Func<T1, T2, T3, T4, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, T2, T3, T4, Tr>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, Func<T1, T2, T3, T4, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(),
                     resultSelector
@@ -57,10 +57,10 @@ namespace TanitakaTech.StateVariable
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read())
             );
         }
-        
-        public static DependencyState<TR> Create<T1, T2, T3, T4, T5, TR>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, Func<T1, T2, T3, T4, T5, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, T2, T3, T4, T5, Tr>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, Func<T1, T2, T3, T4, T5, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(),
                     resultSelector
@@ -68,10 +68,10 @@ namespace TanitakaTech.StateVariable
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read())
             );
         }
-        
-        public static DependencyState<TR> Create<T1, T2, T3, T4, T5, T6, TR>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6, Func<T1, T2, T3, T4, T5, T6, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, T2, T3, T4, T5, T6, Tr>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6, Func<T1, T2, T3, T4, T5, T6, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(),
                     resultSelector
@@ -79,10 +79,10 @@ namespace TanitakaTech.StateVariable
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read())
             );
         }
-        
-        public static DependencyState<TR> Create<T1, T2, T3, T4, T5, T6, T7, TR>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6, IStateObserver<T7> source7, Func<T1, T2, T3, T4, T5, T6, T7, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, T2, T3, T4, T5, T6, T7, Tr>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6, IStateObserver<T7> source7, Func<T1, T2, T3, T4, T5, T6, T7, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(), source7.Observe(),
                     resultSelector
@@ -90,10 +90,10 @@ namespace TanitakaTech.StateVariable
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read(), source7.Read())
             );
         }
-        
-        public static DependencyState<TR> Create<T1, T2, T3, T4, T5, T6, T7, T8, TR>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6, IStateObserver<T7> source7, IStateObserver<T8> source8, Func<T1, T2, T3, T4, T5, T6, T7, T8, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, T2, T3, T4, T5, T6, T7, T8, Tr>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6, IStateObserver<T7> source7, IStateObserver<T8> source8, Func<T1, T2, T3, T4, T5, T6, T7, T8, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(), source7.Observe(), source8.Observe(),
                     resultSelector
@@ -101,10 +101,10 @@ namespace TanitakaTech.StateVariable
                 resultSelector: () => resultSelector(source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read(), source7.Read(), source8.Read())
             );
         }
-        
-        public static DependencyState<TR> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, TR>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6, IStateObserver<T7> source7, IStateObserver<T8> source8, IStateObserver<T9> source9, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TR> resultSelector)
+
+        public static DependencyState<Tr> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, Tr>(IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3, IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6, IStateObserver<T7> source7, IStateObserver<T8> source8, IStateObserver<T9> source9, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(), source7.Observe(), source8.Observe(), source9.Observe(),
                     resultSelector
@@ -113,13 +113,13 @@ namespace TanitakaTech.StateVariable
             );
         }
 
-        public static DependencyState<TR> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TR>(
+        public static DependencyState<Tr> Create<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, Tr>(
             IStateObserver<T1> source1, IStateObserver<T2> source2, IStateObserver<T3> source3,
             IStateObserver<T4> source4, IStateObserver<T5> source5, IStateObserver<T6> source6,
             IStateObserver<T7> source7, IStateObserver<T8> source8, IStateObserver<T9> source9,
-            IStateObserver<T10> source10, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TR> resultSelector)
+            IStateObserver<T10> source10, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, Tr> resultSelector)
         {
-            return new DependencyState<TR>(
+            return new DependencyState<Tr>(
                 resultObservable: Observable.CombineLatest(
                     source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(),
                     source6.Observe(), source7.Observe(), source8.Observe(), source9.Observe(), source10.Observe(),
