@@ -17,6 +17,48 @@ namespace TanitakaTech.StateVariable
             _resultObservable = resultObservable;
         }
 
+        public static DependencyState<Tr> Create<T1, Tr>(Observable<T1> source1, Func<T1, Tr> resultSelector)
+        {
+            var source1BeforeValue = default(T1);
+            return new DependencyState<Tr>(
+                resultObservable: source1
+                    .Do(value => source1BeforeValue = value)
+                    .Select(resultSelector)
+                    .DistinctUntilChanged(),
+                resultSelector: () => resultSelector(source1BeforeValue)
+            );
+        }
+
+        public static DependencyState<Tr> Create<T1, T2, Tr>(Observable<T1> source1, Observable<T2> source2, Func<T1, T2, Tr> resultSelector)
+        {
+            var source1BeforeValue = default(T1);
+            var source2BeforeValue = default(T2);
+            return new DependencyState<Tr>(
+                resultObservable: Observable.CombineLatest(
+                    source1.Do(value => source1BeforeValue = value),
+                    source2.Do(value => source2BeforeValue = value),
+                    resultSelector
+                ).DistinctUntilChanged(),
+                resultSelector: () => resultSelector(source1BeforeValue, source2BeforeValue)
+            );
+        }
+
+        public static DependencyState<Tr> Create<T1, T2, T3, Tr>(Observable<T1> source1, Observable<T2> source2, Observable<T3> source3, Func<T1, T2, T3, Tr> resultSelector)
+        {
+            var source1BeforeValue = default(T1);
+            var source2BeforeValue = default(T2);
+            var source3BeforeValue = default(T3);
+            return new DependencyState<Tr>(
+                resultObservable: Observable.CombineLatest(
+                    source1.Do(value => source1BeforeValue = value),
+                    source2.Do(value => source2BeforeValue = value),
+                    source3.Do(value => source3BeforeValue = value),
+                    resultSelector
+                ).DistinctUntilChanged(),
+                resultSelector: () => resultSelector(source1BeforeValue, source2BeforeValue, source3BeforeValue)
+            );
+        }
+
         public static DependencyState<Tr> Create<T1, Tr>(IStateObserver<T1> source1, Func<T1, Tr> resultSelector)
         {
             return new DependencyState<Tr>(
