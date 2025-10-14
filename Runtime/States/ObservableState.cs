@@ -20,7 +20,7 @@ namespace TanitakaTech.StateVariable
         
         public void Set(T value)
         {
-            bool isUpdate = !value.Equals(_value);
+            bool isUpdate = !EqualityComparer<T>.Default.Equals(value, _value);
             _value = value;
             if (isUpdate)
             {
