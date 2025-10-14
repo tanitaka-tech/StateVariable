@@ -18,7 +18,8 @@ namespace TanitakaTech.StateVariable
         {
             _selfObservableState = selfObservableState;
             _resultSelector = resultSelector;
-            _resultObservable = resultObservable;
+            _resultObservable = resultObservable
+                .Do(v => _selfObservableState.SetWithoutNotify(v));
         }
 
         public void Dispose()
