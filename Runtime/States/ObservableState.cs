@@ -9,37 +9,25 @@ namespace TanitakaTech.StateVariable
         IStateObserver<T>,
         IDisposable
     {
-        private T _value;
-        private Subject<T> _subject;
+        private ReactiveProperty<T> _reactiveProperty;
 
         public ObservableState(T initialValue)
         {
-            _value = initialValue;
-            _subject = new Subject<T>();
+            _reactiveProperty = new(initialValue);
         }
         
         public void Set(T value)
         {
-            bool isUpdate = !EqualityComparer<T>.Default.Equals(value, _value);
-            _value = value;
-            if (isUpdate)
-            {
-                _subject.OnNext(_value);
-            }
+            _reactiveProperty.Value = value;
         }
 
-        internal void SetWithoutNotify(T value)
-        {
-            _value = value;
-        }
-
-        public T Read() => _value;
+        public T Read() => _reactiveProperty.Value;
         
-        public Observable<T> Observe() => _subject.Prepend(_value);
+        public Observable<T> Observe() => _reactiveProperty;
 
         public void Dispose()
         {
-            _subject.Dispose();
+            _reactiveProperty.Dispose();
         }
     }
 }
