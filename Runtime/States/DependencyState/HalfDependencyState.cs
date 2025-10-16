@@ -32,8 +32,7 @@ namespace TanitakaTech.StateVariable
                 selfObservableState: selfObservableState,
                 resultObservable: selfObservableState.Observe()
                     .Select(resultSelector)
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read());
@@ -52,8 +51,7 @@ namespace TanitakaTech.StateVariable
                     source1.Do(v => source1BeforeValue = v),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1BeforeValue);
@@ -74,8 +72,7 @@ namespace TanitakaTech.StateVariable
                     source2.Do(v => source2BeforeValue = v),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1BeforeValue, source2BeforeValue);
@@ -98,8 +95,7 @@ namespace TanitakaTech.StateVariable
                     source3.Do(v => source3BeforeValue = v),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1BeforeValue, source2BeforeValue, source3BeforeValue);
@@ -116,8 +112,7 @@ namespace TanitakaTech.StateVariable
                     selfObservableState.Observe(), source1.Observe(),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1.Read());
@@ -134,8 +129,7 @@ namespace TanitakaTech.StateVariable
                     selfObservableState.Observe(), source1.Observe(), source2.Observe(),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1.Read(), source2.Read());
@@ -152,8 +146,7 @@ namespace TanitakaTech.StateVariable
                     selfObservableState.Observe(), source1.Observe(), source2.Observe(), source3.Observe(),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1.Read(), source2.Read(), source3.Read());
@@ -170,8 +163,7 @@ namespace TanitakaTech.StateVariable
                     selfObservableState.Observe(), source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1.Read(), source2.Read(), source3.Read(), source4.Read());
@@ -188,8 +180,7 @@ namespace TanitakaTech.StateVariable
                     selfObservableState.Observe(), source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read());
@@ -206,8 +197,7 @@ namespace TanitakaTech.StateVariable
                     selfObservableState.Observe(), source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read());
@@ -224,8 +214,7 @@ namespace TanitakaTech.StateVariable
                     selfObservableState.Observe(), source1.Observe(), source2.Observe(), source3.Observe(), source4.Observe(), source5.Observe(), source6.Observe(), source7.Observe(),
                     resultSelector
                 )
-                    .DistinctUntilChanged()
-                    .Do(selfObservableState.Set),
+                    .DistinctUntilChanged(),
                 resultSelector: () =>
                 {
                     var result = resultSelector(selfObservableState.Read(), source1.Read(), source2.Read(), source3.Read(), source4.Read(), source5.Read(), source6.Read(), source7.Read());
