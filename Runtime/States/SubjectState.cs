@@ -25,7 +25,7 @@ namespace TanitakaTech.StateVariable
 
         public T Read() => _beforeValue;
 
-        public Observable<T> Observe() => _subject;
+        public Observable<T> Observe() => _subject.Prepend(_beforeValue);
 
         public void Dispose()
         {
