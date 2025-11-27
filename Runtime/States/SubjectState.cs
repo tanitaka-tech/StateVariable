@@ -19,8 +19,8 @@ namespace TanitakaTech.StateVariable
 
         public void Set(T value)
         {
-            _subject.OnNext(value);
             _beforeValue = value;
+            _subject.OnNext(value);
         }
 
         public T Read() => _beforeValue;
