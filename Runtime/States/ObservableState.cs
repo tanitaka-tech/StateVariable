@@ -15,7 +15,7 @@ namespace TanitakaTech.StateVariable
         {
             _reactiveProperty = new(initialValue);
         }
-        
+
         public void Set(T value)
         {
             _reactiveProperty.Value = value;
@@ -28,6 +28,7 @@ namespace TanitakaTech.StateVariable
         public void Dispose()
         {
             _reactiveProperty.Dispose();
+            _reactiveProperty = null;
         }
     }
 }
