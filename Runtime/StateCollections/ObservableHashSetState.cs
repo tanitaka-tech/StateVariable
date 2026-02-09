@@ -54,22 +54,6 @@ namespace TanitakaTech.StateVariable.StateCollections
             return _observableHashset.ObserveCountChanged();
         }
 
-        public Observable<Unit> ObserveAllChangesInternal()
-        {
-            return Observable
-                .Merge(
-                    ObserveAdd().AsUnitObservable()
-                    , ObserveRemove().AsUnitObservable()
-                    , ObserveReplace().AsUnitObservable()
-                    , ObserveMove().AsUnitObservable()
-                    , ObserveReset().AsUnitObservable()
-                    , ObserveCountChanged().AsUnitObservable()
-                    , _observableHashset.ObserveChanged().AsUnitObservable()
-                )
-                .Prepend(Unit.Default)
-                .ThrottleLastFrame(1);
-        }
-
         public Observable<TKey> ObserveElement(TKey id)
         {
             var replaceObservable = _observableHashset.ObserveReplace()
