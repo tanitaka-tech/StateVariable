@@ -15,12 +15,12 @@ namespace TanitakaTech.StateVariable.StateCollections
         public ObservableDictionaryState() : this(new ObservableCollections.ObservableDictionary<TKey, TValue>())
         {
         }
-        
+
         public ObservableDictionaryState(ObservableCollections.ObservableDictionary<TKey, TValue> observableDictionary)
         {
             _observableDictionary = observableDictionary;
         }
-        
+
         public Observable<CollectionAddEvent<TValue>> ObserveAdd()
         {
             return _observableDictionary.ObserveAdd()
@@ -53,6 +53,25 @@ namespace TanitakaTech.StateVariable.StateCollections
         public Observable<int> ObserveCountChanged()
         {
             return _observableDictionary.ObserveCountChanged();
+        }
+
+        public Observable<Unit> ObserveAllChangesInternal()
+        {
+            return Observable
+                .Merge(
+                    ObserveAdd().AsUnitObservable()
+                    , ObserveRemove().AsUnitObservable()
+                    , ObserveReplace().AsUnitObservable()
+                    , ObserveMove().AsUnitObservable()
+                    , ObserveReset().AsUnitObservable()
+                    , ObserveCountChanged().AsUnitObservable()
+                    , _observableDictionary.ObserveChanged().AsUnitObservable()
+                    , _observableDictionary.ObserveDictionaryAdd().AsUnitObservable()
+                    , _observableDictionary.ObserveDictionaryRemove().AsUnitObservable()
+                    , _observableDictionary.ObserveDictionaryReplace().AsUnitObservable()
+                )
+                .Prepend(Unit.Default)
+                .ThrottleLastFrame(1);
         }
 
         public Observable<TValue> ObserveElement(TKey id)
