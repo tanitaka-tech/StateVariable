@@ -65,18 +65,13 @@ namespace TanitakaTech.StateVariable.StateCollections
                     , ObserveMove().AsUnitObservable()
                     , ObserveReset().AsUnitObservable()
                     , ObserveCountChanged().AsUnitObservable()
-                    , ObserveChanged().AsUnitObservable()
+                    , _observableDictionary.ObserveChanged().AsUnitObservable()
                     , _observableDictionary.ObserveDictionaryAdd().AsUnitObservable()
                     , _observableDictionary.ObserveDictionaryRemove().AsUnitObservable()
                     , _observableDictionary.ObserveDictionaryReplace().AsUnitObservable()
                 )
                 .Prepend(Unit.Default)
                 .ThrottleLastFrame(1);
-        }
-
-        public Observable<CollectionChangedEvent<KeyValuePair<TKey, TValue>>> ObserveChanged()
-        {
-            return _observableDictionary.ObserveChanged();
         }
 
         public Observable<TValue> ObserveElement(TKey id)
