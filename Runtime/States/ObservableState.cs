@@ -27,7 +27,7 @@ namespace TanitakaTech.StateVariable
 
         public void Dispose()
         {
-            _reactiveProperty.Dispose();
+            _reactiveProperty?.Dispose();
             _reactiveProperty = null;
         }
     }
