@@ -18,10 +18,15 @@ namespace TanitakaTech.StateVariable
 
         public void Set(T value)
         {
+            if (_reactiveProperty == null) return;
             _reactiveProperty.Value = value;
         }
 
-        public T Read() => _reactiveProperty.Value;
+        public T Read()
+        {
+            if (_reactiveProperty == null) return default;
+            return _reactiveProperty.Value;
+        }
         
         public Observable<T> Observe() => _reactiveProperty;
 

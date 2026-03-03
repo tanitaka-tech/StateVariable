@@ -8,7 +8,7 @@ namespace TanitakaTech.StateVariable
         IStateObserver<T>,
         IDisposable
     {
-        private readonly Subject<T> _subject;
+        private Subject<T> _subject;
         private T _beforeValue;
 
         public SubjectState(T initialValue)
@@ -19,6 +19,7 @@ namespace TanitakaTech.StateVariable
 
         public void Set(T value)
         {
+            if (_subject == null) return;
             _beforeValue = value;
             _subject.OnNext(value);
         }
@@ -29,7 +30,8 @@ namespace TanitakaTech.StateVariable
 
         public void Dispose()
         {
-            _subject.Dispose();
+            _subject?.Dispose();
+            _subject = null;
         }
     }
 }
