@@ -16,7 +16,7 @@
         <Authors>tanitaka-tech</Authors>
         <RepositoryUrl>https://github.com/tanitaka-tech/StateVariable</RepositoryUrl>
         <PackageId>StateVariable</PackageId>
-        <Version>1.4.3</Version>
+        <Version>1.5.0</Version>
         <IsPackable>true</IsPackable>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -34,6 +34,10 @@
         <Compile Remove="Tests\**" />
         <EmbeddedResource Remove="Tests\**" />
         <None Remove="Tests\**" />
+        <Content Remove="Tests~\**" />
+        <Compile Remove="Tests~\**" />
+        <EmbeddedResource Remove="Tests~\**" />
+        <None Remove="Tests~\**" />
     </ItemGroup>
 
 </Project>

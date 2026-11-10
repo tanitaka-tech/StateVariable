@@ -1,5 +1,6 @@
 ﻿using System;
 using R3;
+using TanitakaTech.StateVariable.R3Extensions;
 
 namespace TanitakaTech.StateVariable
 {
@@ -14,7 +15,9 @@ namespace TanitakaTech.StateVariable
         public DependencyState(Observable<T> resultObservable, Func<T> resultSelector)
         {
             _resultSelector = resultSelector;
-            _resultObservable = resultObservable;
+            // NOTE: 購読ごとに計算をやり直さないよう、元の Observable への購読は 1 本にまとめて共有する。
+            //       後から購読した側にも直近の値をすぐ渡す（Read() は共有せずその場で計算する）
+            _resultObservable = resultObservable.ShareLatest();
         }
 
         public static DependencyState<Tr> Create<T1, Tr>(Observable<T1> source1, Func<T1, Tr> resultSelector)

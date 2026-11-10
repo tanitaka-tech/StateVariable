@@ -10,6 +10,12 @@
 - StateCollection
 - DependencyState/HalfDependencyState
 
+### Shared observation of DependencyState
+`DependencyState` / `HalfDependencyState` / `ToStateObserver` share a single subscription to the source among all observers (`ShareLatest`).
+The result is computed once per change no matter how many observers there are, and a late observer receives the latest value immediately.
+The subscription is connected on the first observer and disconnected when the last one is disposed (the cached value is discarded then).
+`Read()` is not shared and always computes the current value.
+
 ## State List
 
 | class                                   | summary                                                                                           | implements interface                                                                                                                                                                              |
