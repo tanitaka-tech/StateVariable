@@ -19,7 +19,8 @@ namespace TanitakaTech.StateVariable.R3Extensions
         
             public StateObserverBridge(Observable<T> observable, out IDisposable disposable)
             {
-                Observable = observable;
+                // NOTE: Read() 用の購読と Observe() の購読者で、元の Observable への購読を 1 本にまとめる
+                Observable = observable.ShareLatest();
                 disposable = Observable
                     .Subscribe(value =>
                     {
